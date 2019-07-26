@@ -1,18 +1,30 @@
-import json
-from urllib import request
+"""
+    :author: Gaurav Nagoshe
+    :since: 11/07/2019
+    :overview:
+
+"""
+
+from django.contrib.auth.models import User
+import requests
+import pytest
 
 
-class TestView:
+def test_login():
+    basepath = 'http://localhost:8000/users/login/'
+    data = {"username":"admin", "password": "admin@123"}
+
+    response = requests.post(url=basepath, data=data)
+
+    assert response.status_code == 202, 'Message for Successful Login'
 
 
+def test_forgot_password():
+    url = 'http://localhost:8000/users/forgot_password/'
+    data = {"email": "gaurav23091996@gmail.com"}
+    response = requests.post(url=url, data=data)
 
-    def test_login(self):
-        basepath = 'http://localhost:8000/'
-        url = basepath + 'users/login'
-        f = {"username":"admin", "password": "admin@123"}
-        json_obj = json.dumps(f)
+    assert response.status_code == 200, 'Successfully sent Email for resetting password'
 
-        response = request.post(url, json_obj)
 
-        assert response.status == 202
 
