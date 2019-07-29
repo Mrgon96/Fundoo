@@ -9,6 +9,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
+from urlshortening.models import get_short_url, invalidate_url, get_full_url
 from Fundoo import settings
 
 
@@ -29,14 +30,18 @@ class SendMail:
 
             # subject for mail
             subject = "Activate Your ChatApp Account"
-
+            uid = urlsafe_base64_encode(user.pk)
+            url = "http://" + current_site.domain + '/' + uid + '/' + token
+            short_url = get_short_url(url)
+            print(short_url)
             # message body for mail
             message = render_to_string('account_activate.html',
                                     {
                                         'user': user,
                                         'domain': current_site.domain,
                                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                                        'token': token
+                                        'token': token,
+                                        'short_url': short_url
                                     })
 
             # emails of sender and receiver

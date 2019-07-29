@@ -8,6 +8,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models.notes import Notes, Label
+from .models.profile_model import UserProfile
 
 
 # define class for User Serializer
@@ -51,6 +52,13 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
             'is_active'
         ]
+
+
+class UserProfilePic(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
 
 
 class LabelSerializer(serializers.ModelSerializer):

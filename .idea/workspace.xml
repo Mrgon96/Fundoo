@@ -2,26 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcd325e0-a40e-41b0-b1c5-0469445a53e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/decorators.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/models/notes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/services/Redis_Service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/services/reset_pass.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/services/s3_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/services/send_mail.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/templates/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/templates/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/users/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FundooApp/users/util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooApp/Fundoo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/Fundoo/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/Fundoo/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/Fundoo/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooApp/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/users/models/profile_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/models/profile_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooApp/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/services/social_auth_views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/services/swagger_views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/services/swagger_views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/services/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/users/services/s3_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/services/s3_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/users/services/send_mail.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/services/send_mail.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/users/templates/password_reset.html" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/templates/password_reset.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooApp/users/tests/test_views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/tests/test_views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooApp/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,6 +80,35 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Fundoo" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/FundooApp/users" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/FundooApp/users/views.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.views" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -111,7 +133,12 @@
       <workItem from="1563853069670" duration="14476000" />
       <workItem from="1563941922524" duration="19348000" />
       <workItem from="1564030152437" duration="13077000" />
-      <workItem from="1564114671527" duration="6171000" />
+      <workItem from="1564114671527" duration="11449000" />
+      <workItem from="1564147654652" duration="611000" />
+      <workItem from="1564205882266" duration="10806000" />
+      <workItem from="1564375304200" duration="8838000" />
+      <workItem from="1564392650020" duration="2869000" />
+      <workItem from="1564398045762" duration="8473000" />
     </task>
     <servers />
   </component>
@@ -123,10 +150,15 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Fundoo$views.coverage" NAME="views Coverage Results" MODIFIED="1564210941286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/FundooApp/users" />
   </component>
 </project>

@@ -144,7 +144,7 @@ local_settings.py
 db.sqlite3
 
 
-.coverage
+.coveragearc
 
 htmlcov/
 
@@ -153,8 +153,5 @@ htmlcov/
 docker-compose.yml
 
 sonar-project.properties
-
-
-
 
 .scannerwork/

@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework_swagger',
     'storages',
-    'django_extensions'
+    'django_extensions',
+    'urlshortening',
 
 ]
 
@@ -260,3 +261,11 @@ STATIC_ROOT = 'static'
 
 # secret key for jwt
 JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+
+# short url
+
+INITIAL_URL_LEN = 6
+RETRY_COUNT = 5
+SHORT_URL_PATH = 'http://localhost:8000/short-prefix/'
+REDIRECT_PREFIX = 'r'
+
