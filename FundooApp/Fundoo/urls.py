@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^login/$', auth_views.auth_login, name='login'),
     url(r'^logout/$', auth_views.auth_logout, name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
-
+    path('notes/', include('notes.urls', namespace='notes'))
 
 ]

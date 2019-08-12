@@ -11,7 +11,8 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from urlshortening.models import get_short_url, invalidate_url, get_full_url
 from Fundoo import settings
-
+from django.shortcuts import render
+from urllib import request
 
 class SendMail:
 
@@ -31,17 +32,16 @@ class SendMail:
             # subject for mail
             subject = "Activate Your ChatApp Account"
             uid = urlsafe_base64_encode(user.pk)
-            url = "http://" + current_site.domain + '/' + uid + '/' + token
-            short_url = get_short_url(url)
-            print(short_url)
+            s = get_short_url(uid)
+            print(s.short_id)
             # message body for mail
-            message = render_to_string('account_activate.html',
+            message = render(request, 'account_activate.html',
                                     {
                                         'user': user,
                                         'domain': current_site.domain,
                                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                                         'token': token,
-                                        'short_url': short_url
+                                        's': s
                                     })
 
             # emails of sender and receiver

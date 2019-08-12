@@ -4,6 +4,7 @@ from Fundoo import settings
 
 r = RedisCache()
 
+
 class Util:
 
     def GetUser(self):

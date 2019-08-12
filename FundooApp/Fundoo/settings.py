@@ -37,7 +37,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,13 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_jwt',
+    'django_elasticsearch_dsl',
+    # 'django_elasticsearch_dsl_drf',
     'django_short_url',
     'social_django',
     'rest_framework_swagger',
+    'corsheaders',
+    'users',
     'storages',
     'django_extensions',
     'urlshortening',
-
+    'notes',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +68,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'social_django.middleware.SocialAuthExceptionMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'Fundoo.urls'
@@ -97,10 +103,10 @@ WSGI_APPLICATION = 'Fundoo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'fundoo',
+        'NAME': os.getenv('NAME'),
         'USER': 'gon',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
         'PORT': '',
     }
 }
@@ -140,6 +146,12 @@ REST_FRAMEWORK = {
     ),
 }
 
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': os.getenv('ELASTIC_SEARCH_HOST')
+    },
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -173,7 +185,7 @@ EMAIL_PORT = os.getenv('EMAIL_PORT')
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": os.getenv('REDIS_LOCATION'),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -194,10 +206,10 @@ AUTHENTICATION_BACKENDS = (
 
 
 # URL redirect for social login
-LOGIN_URL = 'login'
-LOGOUT_URL = 'users/reg'
-LOGIN_REDIRECT_URL = 'users/home'
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
+LOGIN_URL = os.getenv('LOGIN_URL')
+LOGOUT_URL = os.getenv('LOGOUT_URL')
+LOGIN_REDIRECT_URL = os.getenv('LOGIN_REDIRECT_URL')
+SOCIAL_AUTH_URL_NAMESPACE = os.getenv('SOCIAL_AUTH_URL_NAMESPACE')
 
 
 # Social Auth ID's
@@ -234,28 +246,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/userinfo.profile'
     ]
 
-REDIS_PORT = '6379'
-REDIS_HOST = 'localhost'
-REDIS_DB = 0
-
-
-# # AWS Settings
-# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = 'fundoo96'
-# AWS_S3_CUSTOM_DOMAIN = 'fundoo96.s3.amazonaws.com'
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
-# AWS_LOCATION = 'static'
-#
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'Fundoo/static'),
-# ]
-# STATIC_URL = 'https://fundoo96.s3.amazonaws.com/static/'
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# AWS_DEFAULT_ACL = None
-# DEFAULT_FILE_STORAGE = 'Fundoo.storage_backends.MediaStorage'
+REDIS_PORT = os.getenv('REDIS_PORT')
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_DB = os.getenv('REDIS_DB')
 
 STATIC_ROOT = 'static'
 
@@ -269,3 +262,4 @@ RETRY_COUNT = 5
 SHORT_URL_PATH = 'http://localhost:8000/short-prefix/'
 REDIRECT_PREFIX = 'r'
 
+CORS_ORIGIN_ALLOW_ALL = True

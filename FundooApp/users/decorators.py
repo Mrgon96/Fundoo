@@ -12,8 +12,7 @@ def user_login_required(function):
 
             r = RedisCache()
             token = r.get('token')
-            token = token
-            data = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms='HS256')
+            data = jwt.decode(token, settings.JWT_SECRET_KEY, algorithms='HS257')
             userid = data['user_id']
             user = User.objects.get(pk=userid)
 
