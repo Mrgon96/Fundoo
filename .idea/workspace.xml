@@ -2,38 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcd325e0-a40e-41b0-b1c5-0469445a53e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/FundooApp/notes/documents.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/notes/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/notes/search.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/notes/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/notes/templates/search.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/notes/test/test_note_views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FundooApp/notes/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/Fundoo/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/Fundoo/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/Fundoo/test_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/Fundoo/test_settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/Fundoo/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/Fundoo/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/decorators.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/decorators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0002_auto_20190724_0541.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0003_notes_created_at.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0004_auto_20190724_0622.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0005_auto_20190724_0624.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0006_auto_20190725_0614.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0007_auto_20190725_0618.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0008_auto_20190725_0647.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0009_label_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0010_auto_20190725_1009.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0011_userprofile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/migrations/0012_auto_20190729_1018.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/models/notes.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/notes/models/notes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/services/send_mail.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/services/send_mail.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/tests/test_views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/tests/test_views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/notes/models/notes.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/notes/models/notes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/notes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/notes/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooApp/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -198,7 +169,18 @@
       <workItem from="1565239755637" duration="4670000" />
       <workItem from="1565325492554" duration="4660000" />
       <workItem from="1565411150886" duration="7839000" />
-      <workItem from="1565586830889" duration="12966000" />
+      <workItem from="1565586830889" duration="13590000" />
+      <workItem from="1565670425157" duration="7849000" />
+      <workItem from="1565697134030" duration="3000" />
+      <workItem from="1565697280843" duration="2000" />
+      <workItem from="1565700715509" duration="1207000" />
+      <workItem from="1565757088355" duration="1178000" />
+      <workItem from="1565931063469" duration="2429000" />
+      <workItem from="1565960280783" duration="34000" />
+      <workItem from="1565963122272" duration="18000" />
+      <workItem from="1566020582157" duration="6000" />
+      <workItem from="1566020903635" duration="8000" />
+      <workItem from="1566046119446" duration="1036000" />
     </task>
     <servers />
   </component>

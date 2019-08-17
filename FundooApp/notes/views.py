@@ -324,7 +324,9 @@ def create_collaborator(request, note_id):
     :param note_id: for getting particular node
     :return:
     """
+    response = {}
     try:
+
         # request for email data
         email = request.data.get('email')
         # get note from note id
@@ -334,29 +336,45 @@ def create_collaborator(request, note_id):
             if note:  # if note exists
                 # create note serializer
                 note_ser = NoteSerializer(note)
-                return Response(note_ser.data, status=status.HTTP_200_OK)
+                response['data'] = []
+                response['data'].append(note_ser.data)
+                response['message'] = 'note with id ' + str(note_id)
+                response['status'] = 200
+
         if request.method == 'POST':    # if request type is post
             if email:  # if email is not empty
                 # get user from email
                 user = User.objects.get(email=email)
                 if user:  # if user exists
-                    print(user.note_set.all())
-                    if user in user.note_set.all():
-                        return Response({"error": "user already collaborated"}, status=status.HTTP_400_BAD_REQUEST)
+                    if user in note.collaborator.all():
+                        response['data'] = ''
+                        response['message'] = 'user already collaborated'
+                        response['status'] = 400
+
                     note.collaborator.add(user.pk)  # add collaborator as user pk
-                    return Response({"data": "collaborator added successfully"},
-                                    status=status.HTTP_200_OK)
+                    response['data'] = ''
+                    response['message'] = 'collaborator added successfully'
+                    response['status'] = 200
+
             else:
                 raise ValueError
 
     except ValueError:
-        return Response({"error": "empty email"}, status=status.HTTP_400_BAD_REQUEST)
+        response['data'] = ''
+        response['message'] = 'email is empty'
+        response['status'] = 404
 
     except User.DoesNotExist:
-        return Response({"message": "no such user exists"}, status=status.HTTP_404_NOT_FOUND)
+        response['data'] = ''
+        response['message'] = 'user does not exists'
+        response['status'] = 404
 
     except NoteInfo.DoesNotExist:
-        return Response({"message": "no such note"}, status=status.HTTP_404_NOT_FOUND)
+        response['data'] = ''
+        response['message'] = 'note does not exists'
+        response['status'] = 404
+
+    return Response(response, status=response['status'])
 
 
 

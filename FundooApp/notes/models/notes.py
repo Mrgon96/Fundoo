@@ -8,6 +8,7 @@ class Labels(models.Model):
 
 
 class NoteInfo(models.Model):
+
     title = models.CharField(max_length=10000, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=10000, blank=True, null=True)

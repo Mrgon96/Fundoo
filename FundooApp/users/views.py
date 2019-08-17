@@ -84,7 +84,7 @@ class UserView(APIView):
         try:
             data = request.data
             if data is None:
-                return Response({'error': 'Enter Data'})
+                return Response({'error': 'Enter Data'}, status=status.HTTP_400_BAD_REQUEST)
 
             # define a serializer object of UserSerializer and get data
             serializer = UserSerializer(data=data)
@@ -124,7 +124,7 @@ class UserView(APIView):
                 # send mail method to send mail
                 send_mail(subject, message, from_email, to_send, fail_silently=False)
 
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response({'data':serializer.data}, status=status.HTTP_200_OK)
 
         except UserSerializer.errors:   # check for errors
             return Response({'error': 'Enter Valid Data'}, status=status.HTTP_400_BAD_REQUEST)
