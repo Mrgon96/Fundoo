@@ -3,6 +3,9 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import UserService from '../Services/UserService'
 import '../App.css'
+import { Link, Redirect } from 'react-router-dom'
+
+
 
 const userService = new UserService().login_service
 
@@ -11,7 +14,8 @@ export class Login extends Component {
         super();
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirect: false,
         }   
         this.handleSubmit=this.handleSubmit.bind(this)
         this.onChange=this.onChange.bind(this)
@@ -19,14 +23,29 @@ export class Login extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        let data = JSON.stringify(this.state)
-        console.log(data)
+        // let data = JSON.stringify(this.state)
+        var data ={
+            'username':this.state.username,
+            'password':this.state.password  
+        }
+        // console.log(data)
         userService(data)
         .then(res =>{
-            console.log(res.data)
+            console.log(res.data);
+            
+            sessionStorage.setItem('userdata',res.data)
+            if(res.data.token){
+                localStorage.setItem('token', res.data.token);
+                this.setState({redirect:true})
+            }
+
         }).catch(error=>{
             console.log("Error", error);
+            var responseError=error.response.data.Error
+            alert(responseError)
+
         })
+
     }
 
     onChange = event =>{
@@ -36,9 +55,27 @@ export class Login extends Component {
     }
 
     render() {
+
+        if(this.state.redirect){
+            return <Redirect to={'/dashboard'} />
+        }
+        
+        if(sessionStorage.getItem("userdata")){
+            return <Redirect to={'/dashboard'} />
+        }
+
         return (
+
+            
             <form onSubmit={this.handleSubmit} className="login">
-                <h1>FundooNotes</h1>
+                <div className="fundooHeading">
+                    <span>F</span>
+                    <span>u</span>
+                    <span>n</span>
+                    <span>d</span>
+                    <span>o</span>
+                    <span>o</span>
+                </div>
                 <h2>Login Here</h2>
                 <table className="table1"> 
                     <tbody>
@@ -75,6 +112,16 @@ export class Login extends Component {
                                 >
                                    Login 
                                 </Button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <Link to="/register">Register Here</Link>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <Link to="/forgotpass">Forgot Your Password ?</Link>
                             </td>
                         </tr>
                     </tbody>

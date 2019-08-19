@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import '../App.css'
 import UserService from '../Services/UserService'
-
+import { Link, Redirect } from 'react-router-dom'
 
 const userService = new UserService().register_service
 export class Register extends Component {
@@ -14,7 +14,8 @@ export class Register extends Component {
             last_name : '',
             username : '',
             email : '',
-            password: ''
+            password: '',
+            signedUp: false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onChange = this.onChange.bind(this)
@@ -22,13 +23,24 @@ export class Register extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        let data = JSON.stringify(this.state)
+        let data={
+            first_name : this.state.first_name,
+            last_name : this.state.last_name,
+            username : this.state.username,
+            email : this.state.email,
+            password: this.state.password
+        }
         console.log(data)
         userService(data)
         .then(res =>{
             console.log(res.data)
+            this.setState({
+                signedUp:true
+            })
         }).catch(error=>{
-            console.log("Error", error);
+            console.log("Error", error.response.data.Error);
+            var responseError=error.response.data.Error
+            alert(responseError)
         })
     }
 
@@ -38,6 +50,15 @@ export class Register extends Component {
         })
     }
     render() {
+        if(this.state.signedUp){
+            alert("Signup Successfull.. Log in Now")
+            return <Redirect to={'/'} />
+        }
+
+        if(sessionStorage.getItem("userdata")){
+            return <Redirect to={'/dashboard'} />
+        }
+        
         return ( 
                 <form onSubmit={this.handleSubmit} className="red">
                 <h1>Fundoo Notes</h1>
@@ -124,6 +145,11 @@ export class Register extends Component {
                             >
                             Sign UP
                             </Button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan="2">
+                                <Link to="/">Log in</Link>
                             </td>
                         </tr>
                     </tbody>

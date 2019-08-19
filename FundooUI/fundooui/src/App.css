@@ -18,6 +18,50 @@
   border: 0.5px solid rgb(216, 216, 216);
 }
 
+.forgotPass{
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 500px;
+  height: 300px;
+  text-align: center;
+  background: rgb(255, 255, 255);
+  border-radius: 25px;
+  border: 0.5px solid rgb(216, 216, 216);
+}
+
+
+.fundooHeading{
+  margin-top: 20px;
+  letter-spacing: .11785714em;
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  font-style: bold;
+  text-transform: uppercase;
+}
+
+.fundooHeading :nth-child(1){
+  color: rgb(32, 110, 255);
+}
+.fundooHeading :nth-child(2){
+  color: rgb(72, 255, 0);
+}
+.fundooHeading :nth-child(3){
+  color: red;
+}
+.fundooHeading :nth-child(4){
+  color: rgb(0, 174, 255);
+}
+.fundooHeading :nth-child(5){
+  color: rgb(185, 187, 46);
+}
+.fundooHeading :nth-child(6){
+  color: red;
+}
 
 .table1{
   margin: auto;
@@ -35,6 +79,11 @@
 
 .input1{
   width: 90%;
+}
+
+.input2{
+  width: 80%; 
+  margin-top: 20px;
 }
 
 .login{
@@ -210,4 +259,8 @@
   background: lightgreen;
   margin-left: 250px;
   transition: 1s;
+}
+
+.profileMenu{
+  background: red;
 }

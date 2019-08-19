@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^reg/$', TemplateView.as_view(template_name="register.html"), name='register'),
     url(r'^logout/$', user_views.logout, name='logout'),
     url(r'^upload/$',user_views.upload, name='upload'),
+    url(r'^pic/$', user_views.ProfilePic, name='profile_pic')
     # url(r'^notes/$', user_views.note_api, name='notes'),
 
 ]

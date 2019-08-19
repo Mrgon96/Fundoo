@@ -8,8 +8,13 @@ class UserService{
     }
 
     login_service(data){
+        // alert(data)
         return axios.post("http://localhost:8000/users/login/", data)
         
+    }
+
+    get_profile_pic(){
+        return axios.get("http://localhost:8000/users/pic/")
     }
     
 }

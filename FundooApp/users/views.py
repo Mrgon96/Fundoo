@@ -31,6 +31,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .services.s3_service import ImageUpload
 from .models.profile_model import UserProfile
 from .util import Util
+from .serializers import UserProfilePic
 
 fileUpload = ImageUpload()
 # making object of redis service class
@@ -88,10 +89,14 @@ class UserView(APIView):
 
             # define a serializer object of UserSerializer and get data
             serializer = UserSerializer(data=data)
+            username = data['username']
+
+            if User.objects.filter(username=username).exists():
+                return Response({'Error': 'User already Exists'}, status=status.HTTP_400_BAD_REQUEST)
 
             if serializer.is_valid():  # check for valid data in serializer
-                user = serializer.save()  # make user object from serializer
 
+                user = serializer.save()  # make user object from serializer
                 # payload to generate token
                 payload = {
                     "user_id": user.pk,
@@ -109,13 +114,12 @@ class UserView(APIView):
 
                 # message to be sent in mail
                 message = render_to_string('account_activate.html',
-                                        {
-                                            'user': user,
-                                            'domain': current_site.domain,
-                                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                                            'token': token
-                                        })
-
+                                           {
+                                               'user': user,
+                                               'domain': current_site.domain,
+                                               'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                                               'token': token
+                                           })
 
                 # sender and receiver mails
                 from_email = settings.EMAIL_HOST_USER
@@ -124,10 +128,10 @@ class UserView(APIView):
                 # send mail method to send mail
                 send_mail(subject, message, from_email, to_send, fail_silently=False)
 
-                return Response({'data':serializer.data}, status=status.HTTP_200_OK)
+                return Response(serializer.data, status=status.HTTP_200_OK)
 
-        except UserSerializer.errors:   # check for errors
-            return Response({'error': 'Enter Valid Data'}, status=status.HTTP_400_BAD_REQUEST)
+        except ValueError:
+            return Response({'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 def activate(request, uidb64, token):
@@ -192,11 +196,9 @@ def login(request):
     :return: returns a json response with username , email and generated jwt token
 
     """
-
     # get username and password
     username = request.data.get("username")
     password = request.data.get("password")
-
     try:
         # check for username and password
         if username is None or password is None:
@@ -219,7 +221,7 @@ def login(request):
         token = jwt.encode(payload, settings.JWT_SECRET_KEY, algorithm='HS256').decode('utf-8')
         print(user.is_authenticated)
         # setting token in Redis Cache
-        redis.set('token'+str(user.pk), token)
+        redis.set('token', token)
 
         # login the user
         # auth_login(request, user)
@@ -245,16 +247,28 @@ def upload(request):
         # get file as input from user
         imagename = request.FILES.get('image')
         userdata = util.GetUser()
+        print(userdata)
         uid = userdata['user_id']
-
+        username1 = userdata['usermname']
+        user = request.user
         x = fileUpload.file_upload(imagename, uid)
+        profile_model = UserProfile.objects.get(user=uid)
+        profile_model.profile_pic = x
+        profile_model.save()
 
-        profile = UserProfile(profile_pic=x, user_id=uid)
-        profile.save()
         if x:
             return HttpResponse('Success')
 
     return HttpResponse('Where is Image...')
 
+@api_view(['GET'])
+@csrf_exempt
+@permission_classes((AllowAny,))
+def ProfilePic(request):
+    userdata = util.GetUser()
+    uid=userdata['user_id']
+    profile_model = UserProfile.objects.get(user=uid)
+    pic_ser = UserProfilePic(profile_model)
+    return Response(pic_ser.data, status=status.HTTP_200_OK)
 
 
