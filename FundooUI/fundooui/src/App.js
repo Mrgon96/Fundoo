@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {Register} from './Components/Register'
 import {Login} from './Components/Login'
 import {Dashboard} from './Components/Dashboard'
-// import {Notes} from './Components/Notes'
+import {Note} from './Components/Note'
 import {ForgotPassword} from './Components/ForgotPassword'
 
 class App extends Component {
@@ -16,7 +16,7 @@ class App extends Component {
                 <Route path="/register" exact component={Register}/>
                 <Route path="/" exact component={Login}/>
                 <Route path="/login" exact component={Login}/>
-                {/* <Route path="/notes" exact component={Notes}/> */}
+                <Route path="/note" exact component={Note}/>
                 <Route path="/forgotpass" exact component={ForgotPassword}/>
             </Router>
         </div>

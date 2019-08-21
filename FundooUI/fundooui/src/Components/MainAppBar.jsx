@@ -15,6 +15,8 @@ import Menu from '@material-ui/core/Menu'
 import profileIcon from '../Images/profile.png'
 import '../App.css'
 import { MenuItem } from '@material-ui/core';
+import Profile from './Profile'
+import Redirect from 'react-router-dom'
 import UserService from '../Services/UserService'
 const userService = new UserService().get_profile_pic
 
@@ -25,13 +27,22 @@ export class MainAppBar extends Component {
         this.state = {
             anchorEl : null,
             menuopen : false,
-            profile_pic: ''
+            profile_pic: '',
+            openDialog: false
         }
+
         this.handleClick=this.handleClick.bind(this)
         this.handleMenuClose=this.handleMenuClose.bind(this)
         this.getProfilePic=this.getProfilePic.bind(this)
+        this.openDialogBox = this.openDialogBox.bind(this)
     }
 
+    openDialogBox = event =>{
+        this.setState({
+            openDialog: !this.state.openDialog
+        })
+
+    }
     componentDidMount(){
         this.getProfilePic()
     }
@@ -67,6 +78,7 @@ export class MainAppBar extends Component {
       }
 
     render() {
+
         return (
             <div className="root">
                 <AppBar
@@ -116,8 +128,9 @@ export class MainAppBar extends Component {
                     onClose={this.handleMenuClose}
                     >
                         <MenuItem onClick={this.props.handleSignOut}>Sign Out</MenuItem>
+                        <MenuItem onClick={this.openDialogBox}>Change Profile Pic</MenuItem>
                     </Menu>
-                
+                    <Profile openDialog={this.state.openDialog} openDialogBox={this.openDialogBox}/>
             </div>
         )
     }

@@ -261,6 +261,7 @@ def upload(request):
 
     return HttpResponse('Where is Image...')
 
+
 @api_view(['GET'])
 @csrf_exempt
 @permission_classes((AllowAny,))

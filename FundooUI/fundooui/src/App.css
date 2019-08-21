@@ -164,6 +164,7 @@
 .avatar{
   height: 60px;
   width: 60px;
+  border: 1px solid #505050;
 }
 
 .drawer{
@@ -264,3 +265,62 @@
 .profileMenu{
   background: red;
 }
+
+.noteCard{
+  word-wrap: break-word;
+  width:230px;
+}
+
+.noteTitle{
+  letter-spacing: .00625em;
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  margin-top: 10px;
+}
+.noteContent{
+  letter-spacing: .00825em;
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  margin-top: 10px;
+}
+
+.noteActions{
+  margin-left: 0px;
+  display: flex;
+}
+
+.noteActionContent{
+  width: 18px;
+  margin: 9px;
+  height: 20px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+
+.noteButton{
+  width: 20px;
+  height: 20px;
+}
+.colorMenu{
+  word-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+}
+.colorCircle{
+  width: 40px;
+  height: 40px;
+  margin: 3px;
+  border-radius: 30px;
+  background: red;
+}
+
+
+
+/* .colorPalleteMenu>* {
+  flex: 1 1 160px;
+} */

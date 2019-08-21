@@ -9,7 +9,8 @@ import LabelIcon from '../Images/label.svg'
 import PencilIcon from '../Images/label_edit.svg'
 import ArchiveIcon from '../Images/archive_menu.svg'
 import TrashIcon from '../Images/menu_trash.svg'
-
+import Profile from './Profile'
+import Redirect from 'react-router-dom'
 const theme = createMuiTheme({
     overrides: {
         MuiDrawer:{
@@ -27,11 +28,14 @@ export class Drawer1 extends Component {
         super();
         this.state = {
            section: 'notes',
+
         }
 
         this.handleNotesSection=this.handleNotesSection.bind(this)
         this.handleReminderSection=this.handleReminderSection.bind(this)
     }
+
+
 
     handleNotesSection = event =>{
         this.setState({
@@ -50,6 +54,7 @@ export class Drawer1 extends Component {
     }
 
     render() {
+
         const open = this.props.open
         console.log(open+"=============FROM DRAWER")
         return (

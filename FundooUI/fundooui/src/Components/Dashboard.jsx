@@ -43,6 +43,7 @@ export class Dashboard extends Component {
             open: !this.state.open
         })
         console.log(this.state)
+
     }
 
     openSection(sectionname){
