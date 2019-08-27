@@ -4,7 +4,7 @@ import Drawer1 from './Drawer1'
 import NoteSection from './NoteSection'
 import NoteEdit from './NoteEdit'
 import { Redirect } from 'react-router-dom'
-
+import LabelNotesList from './LabelNotesList'
 export class Dashboard extends Component {
 
     constructor(props){
@@ -12,13 +12,27 @@ export class Dashboard extends Component {
         this.state = {
             open: false,
             section:'notes',
-            redirect: false
+            redirect: false,
+            listView: false,
+            labelname: '',
+            
         }
         this.openDrawer = this.openDrawer.bind(this)
         this.openSection = this.openSection.bind(this)
         this.handleSignOut = this.handleSignOut.bind(this)
+        this.changeView = this.changeView.bind(this)
+        this.openLabelSection = this.openLabelSection.bind(this)
     }
     
+
+    changeView = event=>{
+        this.setState({
+            listView:!this.state.listView
+        })
+        console.log("VIEW CHANGED", this.state.listView)
+        
+    }
+
     handleSignOut = event =>{
         sessionStorage.removeItem("userdata")
         localStorage.removeItem("token")
@@ -46,10 +60,18 @@ export class Dashboard extends Component {
 
     }
 
+    openLabelSection(label_name){
+        console.log('IN OPEN SECTION '+label_name)
+        this.setState({
+            labelname:label_name,
+            section:''
+        }) 
+    }
     openSection(sectionname){
         console.log('IN OPEN SECTION '+sectionname)
         this.setState({
-            section:sectionname
+            section:sectionname,
+            labelname:''
         })
     }
 
@@ -58,14 +80,56 @@ export class Dashboard extends Component {
         if(this.state.redirect){
             return <Redirect to={'/'} />
         }
-        return (
-            <div>
-                <MainAppBar openDrawer={this.openDrawer} handleSignOut={this.handleSignOut}/>
-                <Drawer1 open={this.state.open} openSection={this.openSection}/>
+
+        if(this.state.labelname === ''){
+            return (
+                <div>
+                    <MainAppBar 
+                openDrawer={this.openDrawer} 
+                handleSignOut={this.handleSignOut}
+                changeView={this.changeView}
+                listView={this.state.listView}
+                />
+                <Drawer1 open={this.state.open} openSection={this.openSection} 
+                openLabelSection={this.openLabelSection}
+                />
                 <NoteEdit open={this.state.open} />
-                <NoteSection sectionname={this.state.section} open={this.state.open}/>
-            </div>  
-        )
+                <NoteSection
+                sectionname={this.state.section} 
+                open={this.state.open}
+                listView={this.state.listView}/>
+                </div>
+                
+            )
+        }
+        else{
+            return (
+                <div>
+                    <MainAppBar 
+                openDrawer={this.openDrawer} 
+                handleSignOut={this.handleSignOut}
+                changeView={this.changeView}
+                listView={this.state.listView}
+                />
+                <Drawer1 open={this.state.open} openSection={this.openSection} 
+                openLabelSection={this.openLabelSection}
+                />
+                <NoteEdit open={this.state.open} />
+                <LabelNotesList
+                labelname={this.state.labelname} 
+                open={this.state.open}
+                listView={this.state.listView}/>
+                </div>
+                
+            )
+        }
+        // return (
+        //     <div>
+                
+                
+               
+        //     </div>  
+        // )
     }
 }
 

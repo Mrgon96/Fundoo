@@ -9,8 +9,9 @@ import LabelIcon from '../Images/label.svg'
 import PencilIcon from '../Images/label_edit.svg'
 import ArchiveIcon from '../Images/archive_menu.svg'
 import TrashIcon from '../Images/menu_trash.svg'
-import Profile from './Profile'
-import Redirect from 'react-router-dom'
+import NoteService from '../Services/NoteService'
+const getLabels = new NoteService().get_Labels
+
 const theme = createMuiTheme({
     overrides: {
         MuiDrawer:{
@@ -28,21 +29,39 @@ export class Drawer1 extends Component {
         super();
         this.state = {
            section: 'notes',
+           labels:[],
 
         }
 
         this.handleNotesSection=this.handleNotesSection.bind(this)
         this.handleReminderSection=this.handleReminderSection.bind(this)
+        this.renderLabelsList = this.renderLabelsList.bind(this)
+        this.handleLabelSection = this.handleLabelSection.bind(this)
+        this.handleArchivesSection = this.handleArchivesSection.bind(this)
+        this.handleTrashSection=this.handleTrashSection.bind(this)
     }
 
+    componentDidMount(){
+        this.renderLabelsList();
+    }
 
-
+    renderLabelsList = event =>{
+        getLabels()
+        .then(res=>{
+            this.setState({
+                labels:res.data
+            })
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    }
     handleNotesSection = event =>{
         this.setState({
             section:'notes'
         })
         console.log(this.state)
-        this.props.openSection(this.state.section)
+        this.props.openSection('notes')
     }
 
     handleReminderSection = event =>{
@@ -50,17 +69,56 @@ export class Drawer1 extends Component {
             section:'reminders'
         })
         console.log(this.state)
-        this.props.openSection(this.state.section)
+        this.props.openSection('reminders')
+    }
+
+    handleLabelSection = event =>{
+        console.log(event.target.id, "LABEL EVENT")
+        this.setState({
+            section:event.target.id
+        })
+        console.log(this.state)
+        console.log("SENDING LABEL ID", event.target.id)
+        this.props.openLabelSection(event.target.id)
+    }
+
+    handleArchivesSection = event =>{
+        this.setState({
+            section:'archives'
+        })
+        console.log(this.state)
+        this.props.openSection('archives')
+    }
+
+    handleTrashSection = event =>{
+        this.setState({
+            section:'trash'
+        })
+        console.log(this.state)
+        this.props.openSection('trash')
     }
 
     render() {
+
+        let labelListMap = this.state.labels.map((key)=>{
+            return (<div id={key.name} name={key.name} className="drawer-list" onClick={this.handleLabelSection}>
+                    
+            <div className="drawer-icon">
+            <img src={LabelIcon} alt="Labels"/>
+            </div>
+        
+        <p> {key.name} </p>
+        </div>
+
+        )
+        })
 
         const open = this.props.open
         console.log(open+"=============FROM DRAWER")
         return (
             <ThemeProvider theme={theme}> 
                 <Drawer
-                    transitionDuration={1050}
+                    transitionDuration={750}
                     className="drawer"
                     variant="persistent"
                     anchor="left"
@@ -85,14 +143,8 @@ export class Drawer1 extends Component {
                     <div className="label-heading">
                         LABELS 
                     </div>
-                    <div className="drawer-list">
                     
-                        <div className="drawer-icon">
-                        <img src={LabelIcon} alt="Labels"/>
-                        </div>
-                    
-                    <p> Labels </p>
-                    </div>
+                    {labelListMap}
                     
                     
                     <div className="drawer-list">
@@ -103,7 +155,7 @@ export class Drawer1 extends Component {
                     <p> Edit Labels </p>
                     </div>
                     <Divider />
-                    <div className="drawer-list">
+                    <div className="drawer-list" onClick={this.handleArchivesSection}>
                         <div className="drawer-icon">
                         <img src={ArchiveIcon} alt="archive" />
                         </div>
@@ -111,7 +163,7 @@ export class Drawer1 extends Component {
                     <p> Archives </p>
                     </div>
 
-                    <div className="drawer-list">
+                    <div className="drawer-list" onClick={this.handleTrashSection}>
                         <div className="drawer-icon">
                         <img src={TrashIcon} alt="trash" />
                         </div>

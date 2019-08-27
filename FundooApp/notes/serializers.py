@@ -14,10 +14,7 @@ from .models.notes import NoteInfo, Labels
 class LabelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Labels
-        fields = [
-            'name',
-            'user'
-        ]
+        fields = '__all__'
 
     def create(self, validated_data):
         return Labels.objects.create(**validated_data)
@@ -38,34 +35,40 @@ class NoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NoteInfo
-        fields = [
-            'title',
-            'content',
-            'image',
-            'url',
-            'reminder',
-            'is_trashed',
-            'is_archived',
-            'collaborator',
-            'labels',
-            'color',
-            'user'
-        ]
+        fields = '__all__'
+        # fields = [
+        #     'title',
+        #     'content',
+        #     'image',
+        #     'url',
+        #     'reminder',
+        #     'is_trashed',
+        #     'is_archived',
+        #     'collaborator',
+        #     'labels',
+        #     'color',
+        #     'user'
+        # ]
 
         def create(self, validated_data):
-            return NoteInfo.objects.create(**validated_data)
+           return NoteInfo.objects.create(**validated_data)
+            # labels_data = validated_data.pop('labels')
+            # note = NoteInfo.objects.create(**validated_data)
+            # for label_data in labels_data:
+            #     Labels.object.create(note=note, **label_data)
+            # return note
 
         def update(self, instance, validated_data):
             instance.title = validated_data.get('title', instance.title)
             instance.content = validated_data.get('content', instance.content)
             instance.image = validated_data.get('image', instance.image)
             instance.url = validated_data.get('url', instance.url)
-            instance.reminder = validated_data.get('url', instance.url)
+            instance.reminder = validated_data.get('reminder', instance.reminder)
             instance.is_trashed = validated_data.get('is_trashed', instance.is_trashed)
             instance.is_archived = validated_data.get('is_archived', instance.is_archived)
             instance.collaborator = validated_data.get('collaborator', instance.collaborator)
             instance.labels = validated_data.get('labels', instance.labels)
-            instance.color = validated_data.get('label', instance.labels)
+            instance.color = validated_data.get('color', instance.color)
             instance.user = validated_data.get('user', instance.user)
 
             instance.save()

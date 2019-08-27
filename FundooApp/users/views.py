@@ -234,7 +234,8 @@ def login(request):
     context = {
         'token': token,
         'username': user.username,
-        'email': user.email
+        'email': user.email,
+        'id':user.pk
     }
 
     return Response(context, status=status.HTTP_202_ACCEPTED)

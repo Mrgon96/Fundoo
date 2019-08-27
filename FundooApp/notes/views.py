@@ -47,9 +47,16 @@ class NoteInfoList(APIView):
     """
 
     def get(self, request, format=None):
+
+        res = {
+            "data": []
+        }
         try:
             # get all objects in notes
-            notes = NoteInfo.objects.all()
+            userdata = util.GetUser()
+            uid=userdata['user_id']
+            print(uid,"User ID HERE")
+            notes = NoteInfo.objects.filter(user=uid).order_by('-created_at')
 
             note_serializer = NoteSerializer(notes, many=True)
 
@@ -59,13 +66,13 @@ class NoteInfoList(APIView):
 
                 # set in redis cache
                 redis.set("notes", pickle_object)
+                res['data'] = note_serializer.data
+                return Response(res, status=status.HTTP_200_OK)
 
-                return Response(note_serializer.data, status=status.HTTP_200_OK)
+        except NoteSerializer.errors:
+            return Response({"error": "no notes"}, status=status.HTTP_400_BAD_REQUEST)
 
-        except note_serializer.errors:
-            return Response({"data": "no notes"}, status=status.HTTP_200_OK)
-
-        return Response({"data": "no notes"}, status=status.HTTP_200_OK)
+        return Response({"error": "no notes"}, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request, format=None):
         # get valid data for serializer
@@ -89,7 +96,7 @@ def trash(request):
         notes = NoteSerializer(trashed, many=True)
 
         if notes:
-            return Response(notes.data, status=status.HTTP_200_OK)
+            return Response({'data':notes.data}, status=status.HTTP_200_OK)
 
         else:
             raise ValueError
@@ -102,13 +109,16 @@ def trash(request):
 @permission_classes([AllowAny])
 def reminders(request):
     try:
+        # get all objects in notes
+        userdata = util.GetUser()
+        uid = userdata['user_id']
         # get notes with reminder
-        reminder = NoteInfo.objects.filter(reminder__isnull=False)
+        reminder = NoteInfo.objects.filter(user=uid, reminder__isnull=False)
         # get serialize data
         notes = NoteSerializer(reminder, many=True)
 
         if reminder and notes:
-            return Response(notes.data, status=status.HTTP_200_OK)
+            return Response({'data':notes.data}, status=status.HTTP_200_OK)
         else:
             raise ValueError
 
@@ -120,13 +130,16 @@ def reminders(request):
 @permission_classes([AllowAny])
 def archives(request):
     try:
+        # get all objects in notes
+        userdata = util.GetUser()
+        uid = userdata['user_id']
         # get archived notes
-        archive = NoteInfo.objects.filter(is_archived=True)
+        archive = NoteInfo.objects.filter(user=uid, is_archived=True)
 
         notes = NoteSerializer(archive, many=True)
 
         if archives and notes:
-            return Response(notes.data, status=status.HTTP_200_OK)
+            return Response({'data':notes.data}, status=status.HTTP_200_OK)
 
         else:
             raise ValueError
@@ -136,16 +149,19 @@ def archives(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def label_notes(request):
+def label_notes(request, label_name):
     try:
+        # get all objects in notes
+        userdata = util.GetUser()
+        uid = userdata['user_id']
         # get labels with primary key
-        label = Labels.objects.get(pk=1)
+        label = Labels.objects.get(user=uid, name=label_name)
         # return notes containing label above
-        label_data = label.notes_set.all()
+        label_data = label.noteinfo_set.all()
         # serialize obtained data
         serializer = NoteSerializer(label_data, many=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'data':serializer.data}, status=status.HTTP_200_OK)
 
     except ValueError:
         return Response({"data": "no such label"})
@@ -218,7 +234,7 @@ class NoteDetails(APIView):
             if serializer.is_valid(raise_exception=True):
                 # save serializer
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response({'data':serializer.data}, status=status.HTTP_200_OK)
 
         except ValueError:
             return Response({"data": "no such note found"}, status=status.HTTP_404_NOT_FOUND)

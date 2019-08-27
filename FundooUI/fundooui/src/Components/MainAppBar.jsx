@@ -13,6 +13,8 @@ import keepIcon from '../Images/keep.png'
 // import Drawer1 from './Drawer1'
 import Menu from '@material-ui/core/Menu'
 import profileIcon from '../Images/profile.png'
+import listIcon from '../Images/list.svg'
+import gridIcon from '../Images/grid.png'
 import '../App.css'
 import { MenuItem } from '@material-ui/core';
 import Profile from './Profile'
@@ -25,6 +27,7 @@ export class MainAppBar extends Component {
     constructor(){
         super();
         this.state = {
+            listView:false,
             anchorEl : null,
             menuopen : false,
             profile_pic: '',
@@ -35,8 +38,10 @@ export class MainAppBar extends Component {
         this.handleMenuClose=this.handleMenuClose.bind(this)
         this.getProfilePic=this.getProfilePic.bind(this)
         this.openDialogBox = this.openDialogBox.bind(this)
+
     }
 
+    
     openDialogBox = event =>{
         this.setState({
             openDialog: !this.state.openDialog
@@ -78,7 +83,10 @@ export class MainAppBar extends Component {
       }
 
     render() {
-
+        var Icon=gridIcon;
+        if(this.props.listView){
+            Icon=listIcon;
+        }            
         return (
             <div className="root">
                 <AppBar
@@ -91,11 +99,13 @@ export class MainAppBar extends Component {
                     </IconButton>
                     <div className="title-body">
                     <img src={keepIcon} alt="hi"></img>
-                    <Typography  gutterBottom>
+                    
                         <div className="title">
+                        <Typography  gutterBottom>
                         fundooNotes
+                        </Typography>
                         </div>     
-                    </Typography>
+                    
                     </div>
                     
                     <div className="search">
@@ -108,6 +118,15 @@ export class MainAppBar extends Component {
                         </InputBase>
                         
                     </div>
+                    
+                    {/* GRID VIEW ICON============== */}
+                    <img src={Icon} 
+                     height="25"
+                      width="25" 
+                      alt="GridView" 
+                      style={{margin:15,  cursor:"pointer"}}
+                      onClick={this.props.changeView}/>
+                    
                     <Avatar
                     aria-controls="profileMenu" 
                     aria-haspopup="true" 

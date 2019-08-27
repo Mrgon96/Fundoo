@@ -7,6 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar'
 import { MenuItem } from '@material-ui/core';
 import ColorPalleteIcon from '../Images/colorPallete.svg'
+import NoteService from '../Services/NoteService'
+
+const updateColor = new NoteService().update_note
 
 export class ColorSelector extends Component {
     constructor(){
@@ -46,12 +49,24 @@ export class ColorSelector extends Component {
       
 
     handleMenuClose = (event) => {
-        console.log(event.target.id,  "=-=-=-=-=-=-=-=-=-=")
         this.setState({
             color: event.target.id
         })
         console.log("noteCOLOR======> "+this.state.color)
         this.props.changeColor(event.target.id)
+
+        var updateColorData = {
+            "color":event.target.id 
+        }
+        if(this.props.id){
+            updateColor(this.props.id, updateColorData)
+        .then(res =>{
+            console.log("UPDATE COLOR DATA====",res.data)
+        })
+        .catch(error=>{
+            console.log("ERROR FOR COLOR =====", error.response.data)
+        })
+        }
         this.setState({
             anchorEl:null,
             menuopen:false
@@ -92,24 +107,17 @@ export class ColorSelector extends Component {
                     >
                     </img>
             <Menu 
-            style={{width:200}}
             id="colorMenu"
             className="colorMenu"
             anchorEl={this.state.anchorEl}
-            keepMounted
+            keepMounted 
             open={this.state.menuopen}
             onClose={this.state.handleMenuClose}
             >       
 
-                <Grid container justify="space-between" alignItems="center">
+                <Grid style={{width:120}} container justify="space-between" alignItems="center">
                     {Bgcolors}
                     </Grid>               
-                    {/* <MenuItem className="colorPalleteMenu">
-                    <span className="colorCircle">
-                    </span>
-                    </MenuItem>*/}
-
-                    {/* </MenuItem> */}
             </Menu>
             </div>
             

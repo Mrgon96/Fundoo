@@ -31,9 +31,10 @@ export class Login extends Component {
         // console.log(data)
         userService(data)
         .then(res =>{
-            console.log(res.data);
+            console.log("DATA AFTER LOGIN", res.data);
             
             sessionStorage.setItem('userdata',res.data)
+            sessionStorage.setItem('id',res.data.id)
             if(res.data.token){
                 localStorage.setItem('token', res.data.token);
                 this.setState({redirect:true})

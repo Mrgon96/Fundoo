@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Menu from '@material-ui/core/Menu'
 import { MenuItem } from '@material-ui/core';
 import MoreIcon from '../Images/more.svg';
+import LabelMenu from './LabelMenu'
 
 export class NoteMoreMenu extends Component {
     constructor(){
@@ -51,9 +52,15 @@ export class NoteMoreMenu extends Component {
                 keepMounted
                 open={this.state.menuopen}
                 onClose={this.state.handleMenuClose}
-                >
+                >   
+                    <div style={{display:"none"}}>
                     <MenuItem onClick={this.handleMenuClose}>Delete Node</MenuItem>
                     <MenuItem onClick={this.handleMenuClose}>Add Label</MenuItem>
+                    </div>
+                    
+                    <div style={{dispplay:"block"}}>
+                        <LabelMenu />
+                    </div>
                 </Menu>
             </div>
         )
