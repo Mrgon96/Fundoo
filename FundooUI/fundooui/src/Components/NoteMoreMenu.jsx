@@ -53,12 +53,12 @@ export class NoteMoreMenu extends Component {
                 open={this.state.menuopen}
                 onClose={this.state.handleMenuClose}
                 >   
-                    <div style={{display:"none"}}>
-                    <MenuItem onClick={this.handleMenuClose}>Delete Node</MenuItem>
+                    <div style={{display:"block "}}>
+                    <MenuItem onClick={this.handleMenuClose}>Delete Note</MenuItem>
                     <MenuItem onClick={this.handleMenuClose}>Add Label</MenuItem>
                     </div>
                     
-                    <div style={{dispplay:"block"}}>
+                    <div style={{display:"none"}}>
                         <LabelMenu />
                     </div>
                 </Menu>

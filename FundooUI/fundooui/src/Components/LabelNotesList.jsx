@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
 import Notes from './Notes'
+import NoteEdit from './NoteEdit'
 import NoteService from '../Services/NoteService'
 const get_labelsNotes = new NoteService().get_label_notes
 
@@ -37,7 +38,9 @@ export class LabelNotesList extends Component {
         return (
             
             <div className={(this.props.open ? 'Notesection-shift' : 'Notesection')}>
-                <Notes data={this.state.labelNotesList} listView={listView}/>
+                <NoteEdit  />
+                <Notes data={this.state.labelNotesList} listView={listView} labelsList={this.props.labelsList}/>
+                
             </div>
         )
     }

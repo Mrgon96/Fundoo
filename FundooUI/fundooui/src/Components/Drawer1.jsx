@@ -9,8 +9,8 @@ import LabelIcon from '../Images/label.svg'
 import PencilIcon from '../Images/label_edit.svg'
 import ArchiveIcon from '../Images/archive_menu.svg'
 import TrashIcon from '../Images/menu_trash.svg'
-import NoteService from '../Services/NoteService'
-const getLabels = new NoteService().get_Labels
+// import NoteService from '../Services/NoteService'
+// const getLabels = new NoteService().get_Labels
 
 const theme = createMuiTheme({
     overrides: {
@@ -35,27 +35,19 @@ export class Drawer1 extends Component {
 
         this.handleNotesSection=this.handleNotesSection.bind(this)
         this.handleReminderSection=this.handleReminderSection.bind(this)
-        this.renderLabelsList = this.renderLabelsList.bind(this)
         this.handleLabelSection = this.handleLabelSection.bind(this)
         this.handleArchivesSection = this.handleArchivesSection.bind(this)
         this.handleTrashSection=this.handleTrashSection.bind(this)
     }
 
     componentDidMount(){
-        this.renderLabelsList();
+        
+        this.state.labels = this.props.labelsList
+        
+
     }
 
-    renderLabelsList = event =>{
-        getLabels()
-        .then(res=>{
-            this.setState({
-                labels:res.data
-            })
-        })
-        .catch(error=>{
-            console.log(error);
-        })
-    }
+    
     handleNotesSection = event =>{
         this.setState({
             section:'notes'
@@ -100,7 +92,8 @@ export class Drawer1 extends Component {
 
     render() {
 
-        let labelListMap = this.state.labels.map((key)=>{
+        console.log(this.props.labelsList, "LABELSLIST")
+        let labelListMap = this.props.labelsList.map((key)=>{
             return (<div id={key.name} name={key.name} className="drawer-list" onClick={this.handleLabelSection}>
                     
             <div className="drawer-icon">

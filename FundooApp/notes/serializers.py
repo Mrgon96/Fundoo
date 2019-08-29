@@ -7,6 +7,7 @@
 
 from rest_framework import serializers
 from .models.notes import NoteInfo, Labels
+from django.contrib.auth.models import User
 # from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 # from .documents import NoteDocument
 
@@ -31,7 +32,8 @@ class NoteSerializer(serializers.ModelSerializer):
     and in class Meta fields to be used in Serializer
 
     """
-    labels = LabelSerializer(many=True)
+    # labels = LabelSerializer(many=True)
+    # user = serializers.PrimaryKeyRelatedField()
 
     class Meta:
         model = NoteInfo
@@ -47,11 +49,19 @@ class NoteSerializer(serializers.ModelSerializer):
         #     'collaborator',
         #     'labels',
         #     'color',
-        #     'user'
+        #     ('user','')
         # ]
+        # depth = 1
+        # read_only_fileds = ('user',)
+
 
         def create(self, validated_data):
-           return NoteInfo.objects.create(**validated_data)
+            labels = validated_data.pop('labels')
+            note = NoteInfo.objects.create(**validated_data)
+            for label in labels:
+                Labels.objects.create(**label)
+            return note
+            # return NoteInfo.objects.create(**validated_data)
             # labels_data = validated_data.pop('labels')
             # note = NoteInfo.objects.create(**validated_data)
             # for label_data in labels_data:

@@ -3,6 +3,7 @@ import '../App.css'
 import Notes from './Notes'
 import Reminders from './Reminders'
 import LabelNotesList from './LabelNotesList'
+import NoteEdit from './NoteEdit'
 import NoteService from '../Services/NoteService'
 const get_notes = new NoteService().get_allNotes
 const getReminders = new NoteService().get_reminders
@@ -84,24 +85,30 @@ export class NoteSection extends Component {
         return (
             
             <div className={(this.props.open ? 'Notesection-shift' : 'Notesection')}>
+                <center>
+                <NoteEdit getAllNotes={this.getAllNotes}/>
+                </center>
+               
+
                 {(() => {
                     if (section_name==='notes') {
                         console.log('DKLAKDLADLKSDLKASLD===============.Section')
-                        return <Notes data={this.state.notes} listView={listView}/>
+                        return <Notes data={this.state.notes} labelsList={this.props.labelsList} listView={listView}/>
                     }
                     else if (section_name==='reminders'){
                         console.log('REMINDERS')
-                        return <Notes data={this.state.reminders} listView={listView}/>
+                        return <Notes data={this.state.reminders} labelsList={this.props.labelsList} listView={listView}/>
                     }
                     else if (section_name==='archives'){
                         console.log('ARCHIVES')
-                        return <Notes data={this.state.archives} listView={listView}/>
+                        return <Notes data={this.state.archives} labelsList={this.props.labelsList} listView={listView}/>
                     }
                     else if (section_name==='trash'){
                         console.log('TRASH')
-                        return <Notes data={this.state.trash} listView={listView}/>
+                        return <Notes data={this.state.trash} labelsList={this.props.labelsList} listView={listView}/>
                     }
                 })()}
+                
             </div>
         )
     }

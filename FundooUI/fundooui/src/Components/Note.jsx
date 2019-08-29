@@ -156,7 +156,25 @@ export class Note extends Component {
         var id = this.state.id
         var title=this.state.title
         var content=this.state.content
-        var labelmap = this.state.labels.map((key)=>{
+        // var labelsnames = this.props.labelsList.filter((key)=>{
+            
+        // })
+
+
+        const labelIds = this.state.labels
+        const labelsnames = this.props.labelsList
+        const labelmap1 = []
+
+        // Label Mapping with Label list from note Object
+        labelIds.map((id)=>{
+            labelsnames.map((obj)=>{
+                if(obj.id===id){
+                    labelmap1.push(obj)
+                }
+            })
+        })
+
+        var labelmap = labelmap1.map((key)=>{
             return <Chip label={key.name} style={{marginTop:20, height:25,}} onDelete={AddImageIcon}/>
         })
         var reminder=this.state.reminder

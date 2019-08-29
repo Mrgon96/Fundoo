@@ -398,3 +398,14 @@
   font-weight: 700;
   line-height: 1.25rem;
 }
+
+.labelEditHeading{
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.labelEditContent{
+  width: 200px;
+  height: 40px;
+  background: red;
+}

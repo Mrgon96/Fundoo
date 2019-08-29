@@ -12,7 +12,8 @@ import AddImageIcon from '../Images/addimage.svg'
 import Tooltip from '@material-ui/core/Tooltip';
 import ColorSelector from './ColorSelector';
 import NoteArchiveEdit from './NoteArchiveEdit';
-import NoteMoreMenu from './NoteMoreMenu'
+import NoteMoreMenu from './NoteMoreMenu';
+import Snackbar from '@material-ui/core/Snackbar';
 import NoteReminderMenu from './NoteReminderMenu';
 import NoteService from '../Services/NoteService'
 const createNote = new NoteService().create_note
@@ -76,7 +77,7 @@ export class NoteEdit extends Component {
     }
 
     onSubmitCreateNote = event =>{
-        let id = sessionStorage.getItem("id")
+        let uid = sessionStorage.getItem("id")
         let state = this.state
         var data = 
         {
@@ -90,12 +91,13 @@ export class NoteEdit extends Component {
             is_archived: state.is_archived,
             is_pinned: state.is_pinned,
             color: state.color,
-            user: id,
+            user: uid,
             collaborator: state.collaborator,
         }
         createNote(data)
         .then(res=>{
-            console.log("RESPONSE AFTER NOTE CREATED", res.data)
+            this.props.getAllNotes()
+
             
         })
         .catch(error=>{
@@ -195,7 +197,17 @@ export class NoteEdit extends Component {
                 </Card>
                 </ThemeProvider>
                 
-                
+                {/* <Snackbar open={true}
+                anchorOrigin={{
+                    horizontal:'left',
+                    vertical:'bottom'
+                }}
+                message="Note Created"
+                transitionDuration={5000}
+                autoHideDuration={5}
+                > */}
+                    
+                {/* </Snackbar> */}
             </div>
         )
     }

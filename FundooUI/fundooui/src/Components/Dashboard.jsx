@@ -5,6 +5,11 @@ import NoteSection from './NoteSection'
 import NoteEdit from './NoteEdit'
 import { Redirect } from 'react-router-dom'
 import LabelNotesList from './LabelNotesList'
+import LabelEdit from './LabelEdit'
+import NoteService from '../Services/NoteService'
+const getLabels = new NoteService().get_Labels
+
+
 export class Dashboard extends Component {
 
     constructor(props){
@@ -15,6 +20,7 @@ export class Dashboard extends Component {
             redirect: false,
             listView: false,
             labelname: '',
+            labelsList:[]
             
         }
         this.openDrawer = this.openDrawer.bind(this)
@@ -22,6 +28,7 @@ export class Dashboard extends Component {
         this.handleSignOut = this.handleSignOut.bind(this)
         this.changeView = this.changeView.bind(this)
         this.openLabelSection = this.openLabelSection.bind(this)
+        this.renderLabelsList = this.renderLabelsList.bind(this)
     }
     
 
@@ -31,6 +38,21 @@ export class Dashboard extends Component {
         })
         console.log("VIEW CHANGED", this.state.listView)
         
+    }
+
+    componentDidMount(){
+        this.renderLabelsList();
+    }
+    renderLabelsList = event =>{
+        getLabels()
+        .then(res=>{
+            this.setState({
+                labelsList:res.data
+            })
+        })
+        .catch(error=>{
+            console.log(error);
+        })
     }
 
     handleSignOut = event =>{
@@ -90,14 +112,19 @@ export class Dashboard extends Component {
                 changeView={this.changeView}
                 listView={this.state.listView}
                 />
-                <Drawer1 open={this.state.open} openSection={this.openSection} 
+                <Drawer1
+                 labelsList={this.state.labelsList}
+                 open={this.state.open} openSection={this.openSection} 
                 openLabelSection={this.openLabelSection}
                 />
-                <NoteEdit open={this.state.open} />
+                
                 <NoteSection
+                labelsList={this.state.labelsList}
                 sectionname={this.state.section} 
                 open={this.state.open}
                 listView={this.state.listView}/>
+
+                <LabelEdit labelsList={this.state.labelsList}/>
                 </div>
                 
             )
@@ -111,15 +138,21 @@ export class Dashboard extends Component {
                 changeView={this.changeView}
                 listView={this.state.listView}
                 />
-                <Drawer1 open={this.state.open} openSection={this.openSection} 
+                <Drawer1
+                labelsList={this.state.labelsList} 
+                open={this.state.open} openSection={this.openSection} 
                 openLabelSection={this.openLabelSection}
                 />
-                <NoteEdit open={this.state.open} />
+                
                 <LabelNotesList
+                labelsList={this.state.labelsList}
                 labelname={this.state.labelname} 
                 open={this.state.open}
                 listView={this.state.listView}/>
+
+                <LabelEdit labelsList={this.state.labelsList}/>
                 </div>
+                
                 
             )
         }

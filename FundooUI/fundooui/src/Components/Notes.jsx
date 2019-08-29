@@ -10,7 +10,7 @@ export class Notes extends Component {
         
         const notes = this.props.data.map((key)=>{
             console.log(key, "FOR ONE NOTE")
-            return <Note  data={key} listView={listView}/>
+            return <Note  data={key} listView={listView} labelsList={this.props.labelsList}/>
         })
 
         return (
