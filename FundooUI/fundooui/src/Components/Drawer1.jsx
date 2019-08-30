@@ -9,6 +9,8 @@ import LabelIcon from '../Images/label.svg'
 import PencilIcon from '../Images/label_edit.svg'
 import ArchiveIcon from '../Images/archive_menu.svg'
 import TrashIcon from '../Images/menu_trash.svg'
+import LabelEdit from './LabelEdit'
+
 // import NoteService from '../Services/NoteService'
 // const getLabels = new NoteService().get_Labels
 
@@ -47,7 +49,7 @@ export class Drawer1 extends Component {
 
     }
 
-    
+
     handleNotesSection = event =>{
         this.setState({
             section:'notes'
@@ -140,7 +142,7 @@ export class Drawer1 extends Component {
                     {labelListMap}
                     
                     
-                    <div className="drawer-list">
+                    <div className="drawer-list" onClick={this.props.changeOpenEdit}>
                         <div className="drawer-icon">
                         <img src={PencilIcon} alt="Edit Labels"/>
                         </div>
@@ -164,7 +166,7 @@ export class Drawer1 extends Component {
                     <p> Trash </p>
                     </div>
       
-                   </Drawer>      
+                   </Drawer>     
             </ThemeProvider>
             
         )

@@ -79,7 +79,12 @@ export class NoteEdit extends Component {
     onSubmitCreateNote = event =>{
         let uid = sessionStorage.getItem("id")
         let state = this.state
-        var data = 
+        if(state.title === '' && state.content === '' && state.color==='#fff')
+        {
+            alert("EDIT Somethinmg")
+        }
+        else{
+            var data = 
         {
             labels:state.labels,
             title:state.title,
@@ -103,6 +108,7 @@ export class NoteEdit extends Component {
         .catch(error=>{
             console.log("ERROR AFTER NOTE CREATED", error.data)
         })
+        }
     }
 
     handleEditClose = event => {

@@ -20,7 +20,8 @@ export class Dashboard extends Component {
             redirect: false,
             listView: false,
             labelname: '',
-            labelsList:[]
+            labelsList:[],
+            openEdit:false
             
         }
         this.openDrawer = this.openDrawer.bind(this)
@@ -29,6 +30,7 @@ export class Dashboard extends Component {
         this.changeView = this.changeView.bind(this)
         this.openLabelSection = this.openLabelSection.bind(this)
         this.renderLabelsList = this.renderLabelsList.bind(this)
+        this.changeOpenEdit = this.changeOpenEdit.bind(this)
     }
     
 
@@ -47,12 +49,20 @@ export class Dashboard extends Component {
         getLabels()
         .then(res=>{
             this.setState({
-                labelsList:res.data
+                labelsList:res.data,
+                openEdit:false
             })
         })
         .catch(error=>{
             console.log(error);
         })
+    }
+
+    changeOpenEdit = e =>{
+        this.setState({
+            openEdit:!this.state.openEdit
+        })
+        console.log("OPEN EDIT CHANGED", this.state.openEdit)
     }
 
     handleSignOut = event =>{
@@ -113,6 +123,7 @@ export class Dashboard extends Component {
                 listView={this.state.listView}
                 />
                 <Drawer1
+                changeOpenEdit={this.changeOpenEdit}
                  labelsList={this.state.labelsList}
                  open={this.state.open} openSection={this.openSection} 
                 openLabelSection={this.openLabelSection}
@@ -124,7 +135,9 @@ export class Dashboard extends Component {
                 open={this.state.open}
                 listView={this.state.listView}/>
 
-                <LabelEdit labelsList={this.state.labelsList}/>
+                <LabelEdit 
+                 changeOpenEdit={this.changeOpenEdit}
+                labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
                 </div>
                 
             )
@@ -139,6 +152,7 @@ export class Dashboard extends Component {
                 listView={this.state.listView}
                 />
                 <Drawer1
+                changeOpenEdit={this.changeOpenEdit}
                 labelsList={this.state.labelsList} 
                 open={this.state.open} openSection={this.openSection} 
                 openLabelSection={this.openLabelSection}
@@ -150,7 +164,9 @@ export class Dashboard extends Component {
                 open={this.state.open}
                 listView={this.state.listView}/>
 
-                <LabelEdit labelsList={this.state.labelsList}/>
+                <LabelEdit 
+                 changeOpenEdit={this.changeOpenEdit}
+                labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
                 </div>
                 
                 
