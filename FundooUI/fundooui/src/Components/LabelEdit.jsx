@@ -4,58 +4,48 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import LabelIcon from '../Images/label.svg'
-import PencilIcon from '../Images/label_edit.svg'
-import ArchiveIcon from '../Images/archive_menu.svg'
-import TrashIcon from '../Images/menu_trash.svg'
-import Grid from '@material-ui/core/Grid';
+
 import Button from '@material-ui/core/Button';
 import CheckIcon from '../Images/check.svg'  
-import InputBase from '@material-ui/core/InputBase';
+
+import LabelEditList from './LabelEditList'
 
 export class LabelEdit extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             editLabel:false,
             labelId:null,
+            labelsArr:[]
         }
+
+        this.EditLabel = this.EditLabel.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
+    componentDidMount(){
+
+    }
     EditLabel = (e)=>{
-        this.setState({
-            editLabel:!this.state.editLabel,
-            // labelId:e.target.id
-        })
+        console.log("EVENT NAME", e.target.src)
+
+        // this.setState({
+        //     editLabel:!this.state.editLabel,
+        //     // labelId:e.target.id
+        // })
+    }
+
+    handleChange = (e, id) =>{
+        console.log("EVENT NAME", e.target)
     }
     render() {
         
-        let EditIcon = PencilIcon
-        if(this.state.editLabel){
-            EditIcon = CheckIcon
-        }
-
+        
         const labelListMap = this.props.labelsList.map((key=>{
-           
-            return (<Grid container justify="flex-start" style={{width:300}}>
-                       <img src={LabelIcon} 
-                       alt="Label Icon" 
-                       style={{marginRight:10, 
-                       marginLeft:10}}></img>
-                   <Grid style={{width:250}} 
-                   container justify="space-between" 
-                   alignItems="center">
-                    <InputBase 
-                    defaultValue={key.name} 
-                    onClick={this.EditLabel}>
-
-                    </InputBase>
-                    <img id={key.id}
-                     onClick={()=>this.EditLabel()} 
-                     src={EditIcon} heigh="20" width="20" 
-                     alt="Edit Labelname"></img>
-                    </Grid>
-                   </Grid>)
+            
+            // }
+    
+            return (<LabelEditList key={key.id} data={key} EditLabel={this.EditLabel} handleChange={this.handleChange} />)
             })
             )
         return (

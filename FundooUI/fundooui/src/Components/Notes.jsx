@@ -4,13 +4,32 @@ import Note from './Note'
 import Grid from '@material-ui/core/Grid';
 
 export class Notes extends Component {
+    constructor(){
+        super();
+        this.state = {
+            data:[]
+        }
+    }
+
+    componentDidMount(){
+        this.setState({
+            data:this.props.data
+        })
+    }
+
+    // componentDidUpdate(){
+    //     this.setState({
+    //         data:this.props.data
+    //     })
+    // }
+
     render() {
         let listView = this.props.listView
 
         
         const notes = this.props.data.map((key)=>{
             console.log(key, "FOR ONE NOTE")
-            return <Note  data={key} listView={listView} labelsList={this.props.labelsList}/>
+            return <Note getAllNotes={this.props.getAllNotes} data={key} listView={listView} labelsList={this.props.labelsList}/>
         })
 
         return (

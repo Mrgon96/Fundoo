@@ -11,7 +11,7 @@ const get_labelsNotes = new NoteService().get_label_notes
 const getArchives = new NoteService().get_archives
 const getTrash = new NoteService().get_trash
 
-export class NoteSection extends Component {
+export class ArchiveTrashSection extends Component {
     constructor(){
         super();
         this.state={
@@ -21,40 +21,19 @@ export class NoteSection extends Component {
             archives:[],
             trash:[]
         }
-        this.getAllNotes = this.getAllNotes.bind(this)
-        this.getReminderNotes = this.getReminderNotes.bind(this)
+        // this.getAllNotes = this.getAllNotes.bind(this)
+        // this.getReminderNotes = this.getReminderNotes.bind(this)
         // this.getLabelsNotes = this.getLabelsNotes.bind(this)
         this.getArchiveNotes = this.getArchiveNotes.bind(this)
         this.getTrashedNotes = this.getTrashedNotes.bind(this)    
     }
 
     componentDidMount(){
-        this.getAllNotes()
-        this.getReminderNotes()
+        this.getArchiveNotes()
+        this.getTrashedNotes()
     }
     
 
-    getAllNotes(){
-        get_notes()
-        .then(res =>{
-            this.setState({notes:res.data.data})
-            console.log("Data ===========================", this.state.notes)
-
-        }).catch(error=>{
-            console.log(error)
-        })
-    }
-
-    getReminderNotes(){
-        getReminders()
-        .then(res =>{
-            this.setState({reminders:res.data.data})
-            console.log("Data REMINDERS ===========================", this.state.reminders)
-
-        }).catch(error=>{
-            console.log(error)
-        })
-    }
 
     getArchiveNotes(){
         getArchives()
@@ -79,7 +58,7 @@ export class NoteSection extends Component {
     }
 
     render() {
-        let section_name = this.props.sectionname;
+        let section_name = this.props.at;
     
         let listView = this.props.listView
         return (
@@ -92,20 +71,21 @@ export class NoteSection extends Component {
 
                 {(() => {
                     switch(section_name){
-                        case 'notes':
-                                return <Notes data={this.state.notes} labelsList={this.props.labelsList} listView={listView}
-                                getAllNotes={this.getAllNotes}
-                                />
-                        
-                        case 'reminders':
-                                return <Notes data={this.state.reminders} labelsList={this.props.labelsList} listView={listView}
-                                // getAllNotes={this.getAllNotes}
-                                />
+                        case 'archives':
+                        console.log('ARCHIVES')
+                        return <Notes data={this.state.archives} labelsList={this.props.labelsList} listView={listView}
+                        // getAllNotes={this.getAllNotes}
+                        />
+
+                        case 'trash':   
+                        console.log('TRASH')
+                        return <Notes data={this.state.trash} labelsList={this.props.labelsList} listView={listView}
+                        getAllNotes={this.getAllNotes}/>
 
                         default:
                                 return <Notes data={this.state.notes} labelsList={this.props.labelsList} listView={listView}
                                 getAllNotes={this.getAllNotes}
-                                />
+                                            />
 
                     }
                     
@@ -116,4 +96,6 @@ export class NoteSection extends Component {
     }
 }
 
-export default NoteSection
+export default ArchiveTrashSection
+
+

@@ -409,3 +409,7 @@
   height: 40px;
   background: red;
 }
+
+.labelEditIcon :hover{
+  background: red;
+}

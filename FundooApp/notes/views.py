@@ -56,7 +56,7 @@ class NoteInfoList(APIView):
             userdata = util.GetUser()
             uid=userdata['user_id']
             print(uid,"User ID HERE")
-            notes = NoteInfo.objects.filter(user=uid).order_by('-created_at')
+            notes = NoteInfo.objects.filter(user=uid, is_archive=False, is_trash=False).order_by('-created_at')
 
             note_serializer = NoteSerializer(notes, many=True)
 
@@ -91,7 +91,7 @@ class NoteInfoList(APIView):
 def trash(request):
     try:
         # get note objects with trash equal to true
-        trashed = NoteInfo.objects.filter(is_trashed=True)
+        trashed = NoteInfo.objects.filter(is_trash=True)
         # get notes
         notes = NoteSerializer(trashed, many=True)
 
@@ -134,7 +134,7 @@ def archives(request):
         userdata = util.GetUser()
         uid = userdata['user_id']
         # get archived notes
-        archive = NoteInfo.objects.filter(user=uid, is_archived=True)
+        archive = NoteInfo.objects.filter(user=uid, is_archive=True)
 
         notes = NoteSerializer(archive, many=True)
 

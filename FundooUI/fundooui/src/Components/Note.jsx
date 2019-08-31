@@ -34,7 +34,8 @@ export class Note extends Component {
             title:props.data.title,
             content:props.data.content,
             labels:[],
-            reminder:props.data.reminder
+            reminder:props.data.reminder,
+            is_archive:props.data.is_archive
         }
         this.changeColor = this.changeColor.bind(this)
         this.handleNoteDialog = this.handleNoteDialog.bind(this)
@@ -142,7 +143,7 @@ export class Note extends Component {
             displayCard="none"
         }
 
-        console.log(this.props.listView, " IN A NOTE")
+        
         let noteWidth = 230
         var listViewmargin = "20px"
         if(this.props.listView){
@@ -203,7 +204,8 @@ export class Note extends Component {
                     border:borderCard,
                     width:noteWidth,
                     display:displayCard, 
-                    transitionDuration:1
+                    transitionDuration:1,
+                    
                     }}
                     
                     >
@@ -245,7 +247,10 @@ export class Note extends Component {
                     </Tooltip>
 
                     <Tooltip title="Archive">
-                     <NoteArchiveEdit changeColor={this.changeColor}/>
+                     <NoteArchiveEdit 
+                     
+                     
+                    getAllNotes={this.props.getAllNotes} id={this.state.id} changeColor={this.changeColor} is_archive={this.state.is_archive}/>
                     </Tooltip>
 
                     <Tooltip title="More">
@@ -324,8 +329,11 @@ export class Note extends Component {
                     </Tooltip>
 
                     <Tooltip title="Archive">
-                     <NoteArchiveEdit />
-                    </Tooltip>
+                    <NoteArchiveEdit 
+                     
+                     
+                     getAllNotes={this.props.getAllNotes} id={this.state.id} changeColor={this.changeColor} is_archive={this.state.is_archive}/>
+                     </Tooltip>
 
                     <Tooltip title="More">
                     <NoteMoreMenu />

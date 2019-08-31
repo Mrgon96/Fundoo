@@ -81,7 +81,7 @@ export class Drawer1 extends Component {
             section:'archives'
         })
         console.log(this.state)
-        this.props.openSection('archives')
+        this.props.openArTraSection('archives')
     }
 
     handleTrashSection = event =>{
@@ -89,7 +89,7 @@ export class Drawer1 extends Component {
             section:'trash'
         })
         console.log(this.state)
-        this.props.openSection('trash')
+        this.props.openArTraSection('trash')
     }
 
     render() {

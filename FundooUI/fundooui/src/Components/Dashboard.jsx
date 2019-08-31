@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom'
 import LabelNotesList from './LabelNotesList'
 import LabelEdit from './LabelEdit'
 import NoteService from '../Services/NoteService'
+import ArchiveTrashSection from './ArchiveTrashSection';
 const getLabels = new NoteService().get_Labels
 
 
@@ -21,7 +22,8 @@ export class Dashboard extends Component {
             listView: false,
             labelname: '',
             labelsList:[],
-            openEdit:false
+            openEdit:false,
+            at:''
             
         }
         this.openDrawer = this.openDrawer.bind(this)
@@ -31,6 +33,7 @@ export class Dashboard extends Component {
         this.openLabelSection = this.openLabelSection.bind(this)
         this.renderLabelsList = this.renderLabelsList.bind(this)
         this.changeOpenEdit = this.changeOpenEdit.bind(this)
+        this.openArTraSection =this.openArTraSection.bind(this)
     }
     
 
@@ -96,14 +99,24 @@ export class Dashboard extends Component {
         console.log('IN OPEN SECTION '+label_name)
         this.setState({
             labelname:label_name,
-            section:''
+            section:'',
+            at:''
         }) 
     }
     openSection(sectionname){
         console.log('IN OPEN SECTION '+sectionname)
         this.setState({
             section:sectionname,
-            labelname:''
+            labelname:'',
+            at:''
+        })
+    }
+
+    openArTraSection(sectionname){
+        this.setState({
+            section:'',
+            labelname:'',
+            at:sectionname
         })
     }
 
@@ -113,7 +126,7 @@ export class Dashboard extends Component {
             return <Redirect to={'/'} />
         }
 
-        if(this.state.labelname === ''){
+        if(this.state.labelname === '' && this.state.at===''){
             return (
                 <div>
                     <MainAppBar 
@@ -127,6 +140,7 @@ export class Dashboard extends Component {
                  labelsList={this.state.labelsList}
                  open={this.state.open} openSection={this.openSection} 
                 openLabelSection={this.openLabelSection}
+                openArTraSection={this.openArTraSection}
                 />
                 
                 <NoteSection
@@ -142,7 +156,7 @@ export class Dashboard extends Component {
                 
             )
         }
-        else{
+        else if(this.state.section === '' && this.state.at===''){
             return (
                 <div>
                     <MainAppBar 
@@ -152,6 +166,7 @@ export class Dashboard extends Component {
                 listView={this.state.listView}
                 />
                 <Drawer1
+                openArTraSection={this.openArTraSection}
                 changeOpenEdit={this.changeOpenEdit}
                 labelsList={this.state.labelsList} 
                 open={this.state.open} openSection={this.openSection} 
@@ -171,6 +186,37 @@ export class Dashboard extends Component {
                 
                 
             )
+            
+        }
+        else{
+            return (
+            <div>
+                    <MainAppBar 
+                openDrawer={this.openDrawer} 
+                handleSignOut={this.handleSignOut}
+                changeView={this.changeView}
+                listView={this.state.listView}
+                />
+                <Drawer1
+                changeOpenEdit={this.changeOpenEdit}
+                labelsList={this.state.labelsList} 
+                open={this.state.open} openSection={this.openSection} 
+                openLabelSection={this.openLabelSection}
+                openArTraSection={this.openArTraSection}
+                />
+                
+                <ArchiveTrashSection
+                labelsList={this.state.labelsList}
+                at={this.state.at} 
+                open={this.state.open}
+                listView={this.state.listView}/>
+
+                <LabelEdit 
+                 changeOpenEdit={this.changeOpenEdit}
+                labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
+                </div>
+            )
+            }
         }
         // return (
         //     <div>
@@ -180,6 +226,7 @@ export class Dashboard extends Component {
         //     </div>  
         // )
     }
-}
+
+
 
 export default Dashboard
