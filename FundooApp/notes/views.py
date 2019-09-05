@@ -21,6 +21,7 @@ import pickle
 # )
 # from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from django.contrib.auth.models import User
+from elasticsearch_dsl.query import Q
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -305,10 +306,11 @@ def search(request):
     # empty list
     data = []
     #request data
-    s = request.data.get('search')
+    s = request.POST.get('search')
     if s:
         # note search query
-        notes = NoteDocument.search().query("match", title=s)
+        # notes = NoteDocument.search().query("match", title__auto=s)
+        notes = NoteDocument.search().query(Q('match', title=s) | Q('match', content=s))
         # making dictionary of notes obtained
         note_data = {'data': notes}
         # notes in json data

@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import '../App.css'
-import CollaborateIcon from '../Images/collaborator.svg'
+
 import AddImageIcon from '../Images/addimage.svg'
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -18,7 +18,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import NoteService from '../Services/NoteService'
+import NoteService from '../Services/NoteService';
+import CollaborateComponent from './CollaborateComponent'
 import Transition from 'react-transition-group/Transition';
 const getNote=new NoteService().getOneNote;
 const updateReminder = new NoteService().update_note
@@ -35,7 +36,9 @@ export class Note extends Component {
             content:props.data.content,
             labels:[],
             reminder:props.data.reminder,
-            is_archive:props.data.is_archive
+            is_archive:props.data.is_archive,
+            is_trash:props.data.is_trash,
+            listLabels:[]
         }
         this.changeColor = this.changeColor.bind(this)
         this.handleNoteDialog = this.handleNoteDialog.bind(this)
@@ -46,7 +49,6 @@ export class Note extends Component {
         this.onChange = this.onChange.bind(this)
 
     }
-
 
 
     setReminder(reminderDate){
@@ -75,10 +77,10 @@ export class Note extends Component {
     componentDidMount(){
         var noteData= this.props.data
         var Color=noteData.color
-        
         this.setState({
             labels:noteData.labels,
-            noteColor:Color
+            noteColor:Color,
+            listLabels:this.props.labelsList
         })
     }
 
@@ -86,7 +88,7 @@ export class Note extends Component {
         let id = this.state.id
         getNote(id)
         .then(res=>{
-            console.log(res.data,"UPDATED NOTE  ")
+            // console.log(res.data,"UPDATED NOTE  ")
             this.setState({
                 title:res.data.title,
                 content:res.data.content,
@@ -123,12 +125,12 @@ export class Note extends Component {
     }
 
     handleNoteDialog = event => {
-        console.log("Note Dialog Value in Note", )
+        // console.log("Note Dialog Value in Note", )
         this.setState({
             openDialog:!this.state.openDialog
         })
         this.updateNote();
-        console.log("Note Dialog Value in Note", this.state.openDialog)
+        // console.log("Note Dialog Value in Note", this.state.openDialog)
     }
 
     changeColor(color){
@@ -138,6 +140,8 @@ export class Note extends Component {
     }
 
     render() {
+
+        // console.log("IN A NOTE LABELLSI", this.props.labelsList)
         let displayCard="block"
         if(this.state.openDialog){
             displayCard="none"
@@ -176,12 +180,12 @@ export class Note extends Component {
         })
 
         var labelmap = labelmap1.map((key)=>{
-            return <Chip label={key.name} style={{marginTop:20, height:25,}} onDelete={AddImageIcon}/>
+            return <Chip key={key.id} label={key.name} style={{marginTop:20, height:25,}} />
         })
         var reminder=this.state.reminder
 
 
-        console.log("Reminders Are")
+        // console.log("Reminders Are")
         if(reminder!=null){
                 reminder = <Chip label={reminder} style={{marginTop:20, height:25,}} onDelete={this.deleteReminder}/>
         }
@@ -194,6 +198,7 @@ export class Note extends Component {
         
 
         return (
+            
             
             <div>
                 <Card id={id} className="noteCard" 
@@ -233,8 +238,7 @@ export class Note extends Component {
                     
                     </Tooltip>
                     <Tooltip title="Collaborator">
-                    <img src={CollaborateIcon} className="noteActionContent" alt="hi">
-                    </img>
+                    <CollaborateComponent id={this.state.id} />
                     </Tooltip>
 
                     <Tooltip title="Colors">
@@ -254,7 +258,7 @@ export class Note extends Component {
                     </Tooltip>
 
                     <Tooltip title="More">
-                    <NoteMoreMenu />
+                    <NoteMoreMenu labelmap1={labelmap1} labels={this.state.labels} id={this.state.id} getAllNotes={this.props.getAllNotes}/>
                     </Tooltip>
                     </div>
                 </CardActions>
@@ -315,8 +319,7 @@ export class Note extends Component {
                     
                     </Tooltip>
                     <Tooltip title="Collaborator">
-                    <img src={CollaborateIcon} className="noteActionContent" alt="hi">
-                    </img>
+                    <CollaborateComponent id={this.state.id} />
                     </Tooltip>
 
                     <Tooltip title="Colors">
@@ -336,7 +339,7 @@ export class Note extends Component {
                      </Tooltip>
 
                     <Tooltip title="More">
-                    <NoteMoreMenu />
+                    <NoteMoreMenu labelmap1={labelmap1} labels={this.state.labels} id={this.state.id} getAllNotes={this.props.getAllNotes}/>
                     </Tooltip>
                     </div>
 

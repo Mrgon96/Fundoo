@@ -21,6 +21,13 @@ class NoteService{
         return axios.get("http://localhost:8000/notes/labels/")
     }
 
+    add_Labels(data){
+        return axios.post("http://localhost:8000/notes/labels/", data)
+    }
+
+    edit_Label(id, data){
+        return axios.put("http://localhost:8000/notes/labels/"+id+"/", data)
+    }
     get_reminders(){
         return axios.get("http://localhost:8000/notes/reminders/")
     }

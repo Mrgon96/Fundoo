@@ -38,7 +38,7 @@ export class NoteSection extends Component {
         get_notes()
         .then(res =>{
             this.setState({notes:res.data.data})
-            console.log("Data ===========================", this.state.notes)
+            // console.log("Data ===========================", this.state.notes)
 
         }).catch(error=>{
             console.log(error)
@@ -49,7 +49,7 @@ export class NoteSection extends Component {
         getReminders()
         .then(res =>{
             this.setState({reminders:res.data.data})
-            console.log("Data REMINDERS ===========================", this.state.reminders)
+            // console.log("Data REMINDERS ===========================", this.state.reminders)
 
         }).catch(error=>{
             console.log(error)
@@ -60,7 +60,7 @@ export class NoteSection extends Component {
         getArchives()
         .then(res =>{
             this.setState({archives:res.data.data})
-            console.log("Data ARCHIVES ===========================", this.state.reminders)
+            // console.log("Data ARCHIVES ===========================", this.state.reminders)
 
         }).catch(error=>{
             console.log(error)

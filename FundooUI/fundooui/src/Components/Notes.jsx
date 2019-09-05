@@ -28,8 +28,8 @@ export class Notes extends Component {
 
         
         const notes = this.props.data.map((key)=>{
-            console.log(key, "FOR ONE NOTE")
-            return <Note getAllNotes={this.props.getAllNotes} data={key} listView={listView} labelsList={this.props.labelsList}/>
+            // console.log(key, "FOR ONE NOTE")
+            return <Note key={key.id} getAllNotes={this.props.getAllNotes} data={key} listView={listView} labelsList={this.props.labelsList}/>
         })
 
         return (

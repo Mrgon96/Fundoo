@@ -140,7 +140,7 @@ export class NoteReminderMenu extends Component {
                 anchorEl={this.state.anchorEl}
                 keepMounted
                 open={this.state.menuopen}
-                onClose={this.state.handleMenuClose}
+                onClose={this.handleMenuClose}
                 >
 
 

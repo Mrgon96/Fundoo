@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField'
 
 export class Profile extends Component {
     render() {
-        console.log(this.props.openDialog)
+        // console.log(this.props.openDialog)
         return (
             <Dialog open={this.props.openDialog}>
                 <DialogTitle>Profile Pic</DialogTitle>

@@ -162,6 +162,7 @@
   margin-top: 6px;
 }
 .avatar{
+  cursor: pointer;
   height: 60px;
   width: 60px;
   border: 1px solid #505050;
@@ -176,6 +177,7 @@
 
 
 .drawer-list{
+  cursor: pointer;
   list-style: none;
   position: relative;
   justify-content: center;
@@ -198,6 +200,7 @@
 }
 
 .drawer-list p{
+
   margin-left:80px;
 }
 
@@ -412,4 +415,29 @@
 
 .labelEditIcon :hover{
   background: red;
+}
+
+
+.collaboratorDiv{
+  position: relative;
+  background: red;
+  height: 60px;
+  width: 350px;
+  margin-top: 10px;
+}
+
+.collaboratorDiv p{
+  position: absolute;
+  margin-left: 70px;
+  margin-top: 28px;
+}
+
+.collaboratorDiv h4{
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 70px;
+}
+.collaborateAvatar{
+  position: absolute;
+  margin: 10px;
 }

@@ -40,9 +40,7 @@ export class Dashboard extends Component {
     changeView = event=>{
         this.setState({
             listView:!this.state.listView
-        })
-        console.log("VIEW CHANGED", this.state.listView)
-        
+        })        
     }
 
     componentDidMount(){
@@ -78,7 +76,7 @@ export class Dashboard extends Component {
     }
     componentWillMount(){
         if(sessionStorage.getItem("userdata")){
-            console.log(sessionStorage.getItem("userdata").token,"userdata")
+
         }
         else{
             this.setState({
@@ -91,7 +89,6 @@ export class Dashboard extends Component {
         this.setState({
             open: !this.state.open
         })
-        console.log(this.state)
 
     }
 
@@ -150,6 +147,7 @@ export class Dashboard extends Component {
                 listView={this.state.listView}/>
 
                 <LabelEdit 
+                renderLabelsList={this.renderLabelsList}
                  changeOpenEdit={this.changeOpenEdit}
                 labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
                 </div>
@@ -180,6 +178,7 @@ export class Dashboard extends Component {
                 listView={this.state.listView}/>
 
                 <LabelEdit 
+                renderLabelsList={this.renderLabelsList}
                  changeOpenEdit={this.changeOpenEdit}
                 labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
                 </div>
@@ -212,6 +211,7 @@ export class Dashboard extends Component {
                 listView={this.state.listView}/>
 
                 <LabelEdit 
+                renderLabelsList={this.renderLabelsList}
                  changeOpenEdit={this.changeOpenEdit}
                 labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
                 </div>

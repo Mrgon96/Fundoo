@@ -1,21 +1,39 @@
 import React, { Component } from 'react'
-import Checkbox from '@material-ui/core/Checkbox';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import NoteService from '../Services/NoteService'
+const getLabels = new NoteService().get_Labels
 
 export class LabelMenu extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            
+        }
+        this.renderLabelsList = this.renderLabelsList.bind(this)
+    }
+
+    componentDidMount(){
+        this.renderLabelsList();
+    }
+    renderLabelsList = event =>{
+        getLabels()
+        .then(res=>{
+            this.setState({
+                labelsList:res.data,
+            })
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    }
+
     render() {
+        
+       
         return (
             <div>
-                <h1>HI</h1>
-                <FormGroup row>
-        <FormControlLabel
-        control={
-          <Checkbox  value="checkedA" />
-        }
-        label="Secondary"
-            />
-        </FormGroup>
+                
+        
 
             </div>
         )

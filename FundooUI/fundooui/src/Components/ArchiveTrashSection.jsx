@@ -63,9 +63,9 @@ export class ArchiveTrashSection extends Component {
         let listView = this.props.listView
         return (
             
-            <div className={(this.props.open ? 'Notesection-shift' : 'Notesection')}>
+            <div className={(this.props.open ? 'Notesection-shift' : 'Notesection')} style={{marginTop:150}}>
                 <center>
-                <NoteEdit getAllNotes={this.getAllNotes}/>
+                
                 </center>
                
 

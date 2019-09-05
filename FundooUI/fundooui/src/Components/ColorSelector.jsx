@@ -42,17 +42,23 @@ export class ColorSelector extends Component {
             anchorEl: event.target,
             menuopen:true
         })
-        console.log("Opnes")
-        console.log(event.target.value) 
-        console.log(this.state.menuopen) 
+        // console.log("Opnes")
+        // console.log(event.target.value) 
+        // console.log(this.state.menuopen) 
       }
       
+    handleMenuWithClose = (event) => {
+        this.setState({
+            anchorEl:null,
+            menuopen:false
+        })
+    }
 
     handleMenuClose = (event) => {
         this.setState({
             color: event.target.id
         })
-        console.log("noteCOLOR======> "+this.state.color)
+        // console.log("noteCOLOR======> "+this.state.color)
         this.props.changeColor(event.target.id)
 
         var updateColorData = {
@@ -61,16 +67,13 @@ export class ColorSelector extends Component {
         if(this.props.id){
             updateColor(this.props.id, updateColorData)
         .then(res =>{
-            console.log("UPDATE COLOR DATA====",res.data)
+            // console.log("UPDATE COLOR DATA====",res.data)
         })
         .catch(error=>{
-            console.log("ERROR FOR COLOR =====", error.response.data)
+            // console.log("ERROR FOR COLOR =====", error.response.data)
         })
         }
-        this.setState({
-            anchorEl:null,
-            menuopen:false
-        })
+        
       }
 
 
@@ -79,6 +82,7 @@ export class ColorSelector extends Component {
             const colorIs = bgColors.value
             
             return <Avatar
+            key={bgColors.value}
                         id={colorIs}                
                         name={colorIs} 
                         style={{
@@ -112,7 +116,7 @@ export class ColorSelector extends Component {
             anchorEl={this.state.anchorEl}
             keepMounted 
             open={this.state.menuopen}
-            onClose={this.state.handleMenuClose}
+            onClose={this.handleMenuWithClose}
             >       
 
                 <Grid style={{width:120}} container justify="space-between" alignItems="center">

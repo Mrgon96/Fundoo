@@ -54,7 +54,7 @@ export class Drawer1 extends Component {
         this.setState({
             section:'notes'
         })
-        console.log(this.state)
+        // console.log(this.state)
         this.props.openSection('notes')
     }
 
@@ -62,17 +62,17 @@ export class Drawer1 extends Component {
         this.setState({
             section:'reminders'
         })
-        console.log(this.state)
+        // console.log(this.state)
         this.props.openSection('reminders')
     }
 
     handleLabelSection = event =>{
-        console.log(event.target.id, "LABEL EVENT")
+        // console.log(event.target.id, "LABEL EVENT")
         this.setState({
             section:event.target.id
         })
-        console.log(this.state)
-        console.log("SENDING LABEL ID", event.target.id)
+        // console.log(this.state)
+        // console.log("SENDING LABEL ID", event.target.id)
         this.props.openLabelSection(event.target.id)
     }
 
@@ -80,7 +80,7 @@ export class Drawer1 extends Component {
         this.setState({
             section:'archives'
         })
-        console.log(this.state)
+        // console.log(this.state)
         this.props.openArTraSection('archives')
     }
 
@@ -88,15 +88,15 @@ export class Drawer1 extends Component {
         this.setState({
             section:'trash'
         })
-        console.log(this.state)
+        // console.log(this.state)
         this.props.openArTraSection('trash')
     }
 
     render() {
 
-        console.log(this.props.labelsList, "LABELSLIST")
+        // console.log(this.props.labelsList, "LABELSLIST")
         let labelListMap = this.props.labelsList.map((key)=>{
-            return (<div id={key.name} name={key.name} className="drawer-list" onClick={this.handleLabelSection}>
+            return (<div key={key.id} id={key.name} name={key.name} className="drawer-list" onClick={this.handleLabelSection}>
                     
             <div className="drawer-icon">
             <img src={LabelIcon} alt="Labels"/>
@@ -109,7 +109,7 @@ export class Drawer1 extends Component {
         })
 
         const open = this.props.open
-        console.log(open+"=============FROM DRAWER")
+        // console.log(open+"=============FROM DRAWER")
         return (
             <ThemeProvider theme={theme}> 
                 <Drawer

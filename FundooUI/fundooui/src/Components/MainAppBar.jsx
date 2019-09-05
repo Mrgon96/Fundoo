@@ -83,9 +83,9 @@ export class MainAppBar extends Component {
       }
 
     render() {
-        var Icon=gridIcon;
+        var Icon=listIcon;
         if(this.props.listView){
-            Icon=listIcon;
+            Icon=gridIcon;
         }            
         return (
             <div className="root">
