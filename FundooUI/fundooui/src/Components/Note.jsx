@@ -38,7 +38,8 @@ export class Note extends Component {
             reminder:props.data.reminder,
             is_archive:props.data.is_archive,
             is_trash:props.data.is_trash,
-            listLabels:[]
+            listLabels:[],
+            collaborators:[],
         }
         this.changeColor = this.changeColor.bind(this)
         this.handleNoteDialog = this.handleNoteDialog.bind(this)
@@ -78,6 +79,7 @@ export class Note extends Component {
         var noteData= this.props.data
         var Color=noteData.color
         this.setState({
+            collaborators:noteData.collaborator,
             labels:noteData.labels,
             noteColor:Color,
             listLabels:this.props.labelsList
@@ -238,7 +240,7 @@ export class Note extends Component {
                     
                     </Tooltip>
                     <Tooltip title="Collaborator">
-                    <CollaborateComponent id={this.state.id} />
+                    <CollaborateComponent users={this.props.users} id={this.state.id} collaborators={this.state.collaborators}/>
                     </Tooltip>
 
                     <Tooltip title="Colors">
@@ -258,7 +260,7 @@ export class Note extends Component {
                     </Tooltip>
 
                     <Tooltip title="More">
-                    <NoteMoreMenu labelmap1={labelmap1} labels={this.state.labels} id={this.state.id} getAllNotes={this.props.getAllNotes}/>
+                    <NoteMoreMenu  labelmap1={labelmap1} labels={this.state.labels} id={this.state.id} getAllNotes={this.props.getAllNotes}/>
                     </Tooltip>
                     </div>
                 </CardActions>
@@ -272,7 +274,8 @@ export class Note extends Component {
                       backgroundColor: this.state.noteColor,
                       transitionDuration:1
                     },
-                  }} >
+                  }} 
+                  onClose={()=>{this.setState({openDialog:false})}}>
 
                     <DialogTitle >
                     <InputBase 
@@ -319,7 +322,7 @@ export class Note extends Component {
                     
                     </Tooltip>
                     <Tooltip title="Collaborator">
-                    <CollaborateComponent id={this.state.id} />
+                    <CollaborateComponent users={this.props.users} id={this.state.id} collaborators={this.state.collaborators}/>
                     </Tooltip>
 
                     <Tooltip title="Colors">

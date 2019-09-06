@@ -19,7 +19,7 @@ export class ArchiveTrashSection extends Component {
             reminders : [],
             labelNotesList:[],
             archives:[],
-            trash:[]
+            trash:[],
         }
         // this.getAllNotes = this.getAllNotes.bind(this)
         // this.getReminderNotes = this.getReminderNotes.bind(this)
@@ -73,17 +73,17 @@ export class ArchiveTrashSection extends Component {
                     switch(section_name){
                         case 'archives':
                         console.log('ARCHIVES')
-                        return <Notes data={this.state.archives} labelsList={this.props.labelsList} listView={listView}
+                        return <Notes usersList={this.props.usersList} data={this.state.archives} labelsList={this.props.labelsList} listView={listView}
                         // getAllNotes={this.getAllNotes}
                         />
 
                         case 'trash':   
                         console.log('TRASH')
-                        return <Notes data={this.state.trash} labelsList={this.props.labelsList} listView={listView}
+                        return <Notes usersList={this.props.usersList} data={this.state.trash} labelsList={this.props.labelsList} listView={listView}
                         getAllNotes={this.getAllNotes}/>
 
                         default:
-                                return <Notes data={this.state.notes} labelsList={this.props.labelsList} listView={listView}
+                                return <Notes usersList={this.props.usersList} data={this.state.notes} labelsList={this.props.labelsList} listView={listView}
                                 getAllNotes={this.getAllNotes}
                                             />
 

@@ -17,6 +17,9 @@ class UserService{
         return axios.get("http://localhost:8000/users/pic/")
     }
     
+    get_all_users(){
+        return axios.get("http://localhost:8000/users/userlist/")
+    }
 }
 
 export default UserService;

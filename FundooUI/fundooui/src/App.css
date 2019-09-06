@@ -420,7 +420,7 @@
 
 .collaboratorDiv{
   position: relative;
-  background: red;
+  background: lightgray;
   height: 60px;
   width: 350px;
   margin-top: 10px;
@@ -440,4 +440,9 @@
 .collaborateAvatar{
   position: absolute;
   margin: 10px;
+}
+
+.collaborateMenu{
+  align-self: center;
+  
 }

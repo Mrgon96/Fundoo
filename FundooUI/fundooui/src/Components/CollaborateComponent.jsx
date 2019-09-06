@@ -4,7 +4,10 @@ import CollaborateIcon from '../Images/collaborator.svg';
 
 import Menu from '@material-ui/core/Menu'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { Dialog, DialogTitle, DialogContent, Divider, Avatar } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, Divider, Avatar, DialogActions } from '@material-ui/core';
+import profileIcon from '../Images/profile.png';
+import UserService from '../Services/UserService';
+const userService = new UserService().get_profile_pic
 
 export class CollaborateComponent extends Component {
 
@@ -12,7 +15,11 @@ export class CollaborateComponent extends Component {
         super();
         this.state = {
             menuopen : false,
-         
+            owner:sessionStorage.getItem('email'),
+            username:sessionStorage.getItem('username'),
+            profile_pic:profileIcon,
+            collaborators:[],
+            emails:[]
         }
         
         this.handleClick=this.handleClick.bind(this)
@@ -20,6 +27,27 @@ export class CollaborateComponent extends Component {
         
     }
 
+    componentDidMount(){
+        this.getProfilePic();
+        this.setState({
+            collaborators:this.props.collaborators
+        })
+    }
+
+    getProfilePic(){
+        userService()
+        .then(res =>{
+            this.setState({profile_pic:res.data.profile_pic})
+
+
+        }).catch(error=>{
+            this.setState({
+                profile_pic:profileIcon
+            })
+        })
+    }
+
+    
     handleClick = event => {
         this.setState({
             menuopen:true
@@ -37,7 +65,19 @@ export class CollaborateComponent extends Component {
         })
       }
     render() {
-        
+        console.log("USERS LIST", this.props.users)
+        let users = []
+        users = this.props.users
+
+        let user_emails = []
+        users.map((user)=>{
+            this.state.collaborators.map((id)=>{
+                if(id===user.email){
+                    user_emails.push(user)
+                }
+            })
+        })
+        console.log("USERS EMAILS ARE HERE", user_emails)
         return (
             <div>
                 <img src={CollaborateIcon} 
@@ -48,7 +88,7 @@ export class CollaborateComponent extends Component {
                     </img>
             <Dialog 
             id="collaborateMenu"
-            className="colorMenu"
+            className="collaborateMenu"
             keepMounted 
             open={this.state.menuopen}
             // open = {true}
@@ -63,11 +103,11 @@ export class CollaborateComponent extends Component {
                 <DialogContent >
                     <div className="collaboratorDiv">
                         <div className="collaborateAvatar">
-                        <Avatar>
+                        <Avatar src={this.state.profile_pic}>
                         </Avatar>
                         </div>
-                        <h4>GON VERSE</h4>
-                       <p>gaurav23091#hadsbbdabhdj</p>
+                        <h4>{this.state.username}</h4>
+                       <p>{this.state.owner} (owner)</p>
                     </div>
                     <div className="collaboratorDiv">
                         <div className="collaborateAvatar">
@@ -86,6 +126,9 @@ export class CollaborateComponent extends Component {
                        <p>gaurav23091#hadsbbdabhdj</p>
                     </div>
                 </DialogContent>
+                <DialogActions>
+                    <div onClick={this.handleMenuClose}>cancel</div>
+                </DialogActions>
             </Dialog>
             
 

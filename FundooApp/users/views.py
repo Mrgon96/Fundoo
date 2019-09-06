@@ -241,6 +241,7 @@ def login(request):
     return Response(context, status=status.HTTP_202_ACCEPTED)
 
 
+
 @csrf_exempt
 def upload(request):
     if request.method == 'POST':
@@ -273,4 +274,15 @@ def ProfilePic(request):
     pic_ser = UserProfilePic(profile_model)
     return Response(pic_ser.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def userList(request):
+    users = User.objects.all()
+
+    if users:
+        user_ser = UserSerializer(users, many=True)
+        return Response({'users': user_ser.data}, status=status.HTTP_200_OK)
+
+    else:
+        return Response({'users': 'No user'}, status=status.HTTP_200_OK)
 

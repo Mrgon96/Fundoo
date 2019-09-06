@@ -39,7 +39,7 @@ export class LabelNotesList extends Component {
             
             <div className={(this.props.open ? 'Notesection-shift' : 'Notesection')}>
                 <NoteEdit  />
-                <Notes data={this.state.labelNotesList} listView={listView} labelsList={this.props.labelsList}/>
+                <Notes usersList={this.props.usersList} data={this.state.labelNotesList} listView={listView} labelsList={this.props.labelsList}/>
                 
             </div>
         )

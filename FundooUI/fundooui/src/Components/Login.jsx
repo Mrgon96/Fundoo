@@ -37,6 +37,8 @@ export class Login extends Component {
             sessionStorage.setItem('id',res.data.id)
             if(res.data.token){
                 localStorage.setItem('token', res.data.token);
+                sessionStorage.setItem('email', res.data.email)
+                sessionStorage.setItem('username', res.data.username)
                 this.setState({redirect:true})
             }
 

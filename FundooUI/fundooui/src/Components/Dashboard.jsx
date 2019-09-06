@@ -8,7 +8,9 @@ import LabelNotesList from './LabelNotesList'
 import LabelEdit from './LabelEdit'
 import NoteService from '../Services/NoteService'
 import ArchiveTrashSection from './ArchiveTrashSection';
+import UserService from '../Services/UserService'
 const getLabels = new NoteService().get_Labels
+const getUsers = new UserService().get_all_users
 
 
 export class Dashboard extends Component {
@@ -23,7 +25,8 @@ export class Dashboard extends Component {
             labelname: '',
             labelsList:[],
             openEdit:false,
-            at:''
+            at:'',
+            usersList:[]
             
         }
         this.openDrawer = this.openDrawer.bind(this)
@@ -34,8 +37,19 @@ export class Dashboard extends Component {
         this.renderLabelsList = this.renderLabelsList.bind(this)
         this.changeOpenEdit = this.changeOpenEdit.bind(this)
         this.openArTraSection =this.openArTraSection.bind(this)
+        this.getAllUser = this.getAllUser.bind(this)    
     }
     
+    getAllUser(){
+        getUsers()
+        .then(res =>{
+            this.setState({usersList:res.data.users})
+            // console.log("Data ===========================", this.state.notes)
+
+        }).catch(error=>{
+            console.log(error)
+        })
+    }
 
     changeView = event=>{
         this.setState({
@@ -43,9 +57,6 @@ export class Dashboard extends Component {
         })        
     }
 
-    componentDidMount(){
-        this.renderLabelsList();
-    }
     renderLabelsList = event =>{
         getLabels()
         .then(res=>{
@@ -63,6 +74,7 @@ export class Dashboard extends Component {
         this.setState({
             openEdit:!this.state.openEdit
         })
+        this.renderLabelsList();
         console.log("OPEN EDIT CHANGED", this.state.openEdit)
     }
 
@@ -74,7 +86,7 @@ export class Dashboard extends Component {
             redirect:true
         })        
     }
-    componentWillMount(){
+    componentDidMount(){
         if(sessionStorage.getItem("userdata")){
 
         }
@@ -83,6 +95,8 @@ export class Dashboard extends Component {
                 redirect:true
             })
         }
+        this.renderLabelsList()
+        this.getAllUser()
     }
 
     openDrawer = event =>{
@@ -141,6 +155,7 @@ export class Dashboard extends Component {
                 />
                 
                 <NoteSection
+                usersList={this.state.usersList}
                 labelsList={this.state.labelsList}
                 sectionname={this.state.section} 
                 open={this.state.open}
@@ -172,6 +187,7 @@ export class Dashboard extends Component {
                 />
                 
                 <LabelNotesList
+                usersList={this.state.usersList}
                 labelsList={this.state.labelsList}
                 labelname={this.state.labelname} 
                 open={this.state.open}
@@ -205,6 +221,7 @@ export class Dashboard extends Component {
                 />
                 
                 <ArchiveTrashSection
+                usersList={this.state.usersList}
                 labelsList={this.state.labelsList}
                 at={this.state.at} 
                 open={this.state.open}
