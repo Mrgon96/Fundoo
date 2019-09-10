@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import '../App.css'
 import CollaborateIcon from '../Images/collaborator.svg';
-
-import Menu from '@material-ui/core/Menu'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { Dialog, DialogTitle, DialogContent, Divider, Avatar, DialogActions } from '@material-ui/core';
+import addPeopleIcon from '../Images/add_people.svg'
+import { Dialog, DialogTitle, DialogContent, Divider, Avatar, DialogActions, InputBase, Button } from '@material-ui/core';
 import profileIcon from '../Images/profile.png';
 import UserService from '../Services/UserService';
+import NoteService from '../Services/NoteService';
 const userService = new UserService().get_profile_pic
+const addCollaborator = new NoteService().add_collaborator
 
 export class CollaborateComponent extends Component {
 
@@ -19,7 +19,10 @@ export class CollaborateComponent extends Component {
             username:sessionStorage.getItem('username'),
             profile_pic:profileIcon,
             collaborators:[],
-            emails:[]
+            emails:[],
+            email:'',
+            displayError:"none",
+            errorMessage: ''
         }
         
         this.handleClick=this.handleClick.bind(this)
@@ -34,11 +37,22 @@ export class CollaborateComponent extends Component {
         })
     }
 
+    onChangeEmail = event =>
+    {   
+        this.setState({
+            email:event.target.value
+        })
+        this.setState({
+            displayError:"none"
+        })
+        console.log("Email Value", this.state.email)
+    }    
+    
     getProfilePic(){
         userService()
         .then(res =>{
             this.setState({profile_pic:res.data.profile_pic})
-
+            
 
         }).catch(error=>{
             this.setState({
@@ -60,24 +74,72 @@ export class CollaborateComponent extends Component {
 
     handleMenuClose = (event) => {
         this.setState({
-
-            menuopen:false
+            email:'',
+            menuopen:false,
+            displayError:"none",
+            errorMessage:'',
+            
         })
+        
       }
-    render() {
-        console.log("USERS LIST", this.props.users)
-        let users = []
-        users = this.props.users
 
-        let user_emails = []
-        users.map((user)=>{
-            this.state.collaborators.map((id)=>{
-                if(id===user.email){
-                    user_emails.push(user)
-                }
+
+    handleSubmit = event =>{
+        let id = this.props.id
+        var collaborateData = {
+            'email':this.state.email
+        }
+        addCollaborator(id, collaborateData)
+        .then(res=>{
+            console.log(res.data)
+            this.props.updatedNoteRender();
+            this.setState({
+                displayError:"none",
+                errorMessage:''
+                
             })
         })
-        console.log("USERS EMAILS ARE HERE", user_emails)
+        .catch(error=>{
+            this.setState({
+                displayError:"block",
+                errorMessage:error.response.data.message
+            })
+            console.log("ERRROROROR",error.response.data.message)
+        })
+    }
+    render() {
+        // console.log("USERS LIST", this.props.users)
+        
+
+        let user_emails = []
+        // console.log("User_emails 1")
+        this.props.collaborators.map((id)=>{
+            this.props.users.map((user)=>{
+                // console.log("User_emails 2")
+                if(id===user.pk){
+                    user_emails.push(user)
+                }
+                return user_emails
+            })
+            // console.log("User_emails 3")
+            return user_emails
+        })
+
+        // console.log("User_emails 4")
+        // console.log("USERS EMAILS ARE HERE", user_emails)
+
+        const emailsCollaborated = user_emails.map((key)=>{
+            return(<div key={key.pk} className="collaboratorDiv">
+            <div className="collaborateAvatar">
+            <Avatar src={profileIcon}>
+            </Avatar>
+            </div>
+            <h4>{key.username}</h4>
+           <p>{key.email}</p>
+        </div>)
+        })
+
+
         return (
             <div>
                 <img src={CollaborateIcon} 
@@ -109,22 +171,30 @@ export class CollaborateComponent extends Component {
                         <h4>{this.state.username}</h4>
                        <p>{this.state.owner} (owner)</p>
                     </div>
-                    <div className="collaboratorDiv">
+
+                    {emailsCollaborated}
+
+                    <div className="collaboratorDiv2">
                         <div className="collaborateAvatar">
-                        <Avatar>
+                        <Avatar src={addPeopleIcon}>
                         </Avatar>
                         </div>
-                        <h4>GON VERSE</h4>
-                       <p>gaurav23091#hadsbbdabhdj</p>
+                        <InputBase
+                        defaultValue=""
+                         type="email"
+                        onChange={this.onChangeEmail}
+                         placeholder="Enter Email"
+                         className="collaboratorInput">
+                        </InputBase>
+                        <Button onClick={this.handleSubmit} className="collaboratorButton" variant="contained" color="primary">
+                            Add
+                        </Button>
+                        
+                            <p style={{display:this.state.displayError, color:"red"}}>
+                            {this.state.errorMessage}
+                            </p>
                     </div>
-                    <div className="collaboratorDiv">
-                        <div className="collaborateAvatar">
-                        <Avatar>
-                        </Avatar>
-                        </div>
-                        <h4>GON VERSE</h4>
-                       <p>gaurav23091#hadsbbdabhdj</p>
-                    </div>
+                    
                 </DialogContent>
                 <DialogActions>
                     <div onClick={this.handleMenuClose}>cancel</div>

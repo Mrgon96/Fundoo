@@ -1,6 +1,6 @@
 # from elasticsearch_dsl import analyzer
 from django_elasticsearch_dsl.documents import DocType
-# from django_elasticsearch_dsl import fields
+from django_elasticsearch_dsl import fields
 from django_elasticsearch_dsl import Index
 
 from .models.notes import NoteInfo
@@ -21,13 +21,24 @@ class NoteDocument(DocType):
     #         'number_of_shards': 1,
     #         'number_of_replicas': 0
     #     }
-
+    # user = fields.ObjectField(properties={
+    #     'name': fields.IntegerField()
+    # })
     class Django:
         model = NoteInfo
         fields = [
             'id',
             'title',
-            'content'
+            'content',
+            'created_at',
+            'image',
+            'url',
+            # 'user',
+            # 'labels',
+            # 'collaborator',
+            'is_pin',
+            'is_archive',
+            'is_trash'
         ]
 
 

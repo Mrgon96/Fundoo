@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import Menu from '@material-ui/core/Menu'
 import { MenuItem } from '@material-ui/core';
 import MoreIcon from '../Images/more.svg';
-import LabelMenu from './LabelMenu';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import CheckIcon from '../Images/check.svg';
 import Button from '@material-ui/core/Button';
@@ -102,7 +99,7 @@ export class NoteMoreMenu extends Component {
         
         const map = this.state.labelsList.map((key)=>{
                     
-                 {return (
+                 return (
                         <div>
                              <FormControlLabel
                         control={
@@ -112,7 +109,7 @@ export class NoteMoreMenu extends Component {
                          />
                         </div>
                        
-                    )}
+                    )
                 // }
                 // else{
                 //     return (

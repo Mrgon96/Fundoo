@@ -306,12 +306,14 @@ def search(request):
     # empty list
     data = []
     #request data
-    s = request.POST.get('search')
+    s = request.GET.get('search')
     if s:
         # note search query
         # notes = NoteDocument.search().query("match", title__auto=s)
         notes = NoteDocument.search().query(Q('match', title=s) | Q('match', content=s))
         # making dictionary of notes obtained
+        # note_ser = NoteSerializer(notes, many=True)
+        # print(note_ser.data, "Elsactic search Data")
         note_data = {'data': notes}
         # notes in json data
         for i in note_data['data']:
@@ -320,14 +322,19 @@ def search(request):
             data1['id'] = i.id
             data1['title'] = i.title
             data1['content'] = i.content
+            data1['url'] = i.url
+            data1['image']=i.image
+            data1['is_archive']=i.is_archive
+            data1['is_pin']=i.is_pin
+            data1['is_trash']=i.is_trash
 
             # append data in note to data
             data.append(data1)
-        print(data)
+        # print(data)
 
     else:
         data = {
-            'data': ' no data'
+            'data': 'no data'
         }
 
     return Response(data, status=status.HTTP_200_OK)
@@ -369,18 +376,19 @@ def create_collaborator(request, note_id):
                         response['message'] = 'user already collaborated'
                         response['status'] = 400
 
-                    note.collaborator.add(user.pk)  # add collaborator as user pk
-                    response['data'] = ''
-                    response['message'] = 'collaborator added successfully'
-                    response['status'] = 200
+                    else:
+                        note.collaborator.add(user.pk)  # add collaborator as user pk
+                        response['data'] = ''
+                        response['message'] = 'collaborator added successfully'
+                        response['status'] = 200
 
             else:
                 raise ValueError
 
     except ValueError:
         response['data'] = ''
-        response['message'] = 'email is empty'
-        response['status'] = 404
+        response['message'] = 'email cannot be empty'
+        response['status'] = 400
 
     except User.DoesNotExist:
         response['data'] = ''

@@ -9,19 +9,20 @@ import LabelIcon from '../Images/label.svg'
 import PencilIcon from '../Images/label_edit.svg'
 import ArchiveIcon from '../Images/archive_menu.svg'
 import TrashIcon from '../Images/menu_trash.svg'
-import LabelEdit from './LabelEdit'
-
+import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 // import NoteService from '../Services/NoteService'
 // const getLabels = new NoteService().get_Labels
-
+const breakpoints = createBreakpoints({});
 const theme = createMuiTheme({
     overrides: {
         MuiDrawer:{
             paper:{
-                width:250,
-                top:65,
+                width:"auto",
+                top:65,  
             },
+            
         },
+    
     },
 })
 
@@ -44,9 +45,10 @@ export class Drawer1 extends Component {
 
     componentDidMount(){
         
-        this.state.labels = this.props.labelsList
-        
-
+        this.setState({
+            labels:this.props.labelsList
+        })
+ 
     }
 
 
@@ -108,7 +110,7 @@ export class Drawer1 extends Component {
         )
         })
 
-        const open = this.props.open
+        // const open = this.props.open
         // console.log(open+"=============FROM DRAWER")
         return (
             <ThemeProvider theme={theme}> 

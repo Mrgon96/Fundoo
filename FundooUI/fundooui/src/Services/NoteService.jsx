@@ -1,4 +1,6 @@
 import axios from 'axios'
+const queryString = require('query-string');
+var bodyFormData = new FormData();
 
 class NoteService{
     get_allNotes(){
@@ -42,6 +44,14 @@ class NoteService{
 
     get_trash(){
         return axios.get("http://localhost:8000/notes/trash/")
+    }
+
+    add_collaborator(id,data){
+        return axios.post("http://localhost:8000/notes/collaborators/"+id+"/",data)
+    }
+
+    search_Note(data){
+        return axios.get("http://localhost:8000/notes/search/?search="+data)
     }
 }
 

@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
-import Notes from './Notes'
-import Reminders from './Reminders'
-import LabelNotesList from './LabelNotesList'
-import NoteEdit from './NoteEdit'
+import Notes from './Notes';
 import NoteService from '../Services/NoteService'
-const get_notes = new NoteService().get_allNotes
-const getReminders = new NoteService().get_reminders
-const get_labelsNotes = new NoteService().get_label_notes
 const getArchives = new NoteService().get_archives
 const getTrash = new NoteService().get_trash
 

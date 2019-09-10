@@ -26,6 +26,10 @@ export class Notes extends Component {
     render() {
         let listView = this.props.listView
 
+        let gridAdjust = "space-around"
+        if(listView){
+            gridAdjust ="flex-start"
+        }
         
         const notes = this.props.data.map((key)=>{
             // console.log(key, "FOR ONE NOTE")
@@ -33,13 +37,9 @@ export class Notes extends Component {
         })
 
         return (
-            <div style={{width:"100%",marginTop:50}}>
-                <Grid style={{
-                    width:"80%",
-                    marginTop:50, 
-                    marginLeft:100,
-                    }} 
-                    container justify="flex-start" 
+            <div className="NoteGrid" style={{borderColor:"black", borderStyle:"solid", borderWidth:1}}>
+                <Grid 
+                    container justify={gridAdjust}
                     alignItems="center">
                     {notes}
                 </Grid> 

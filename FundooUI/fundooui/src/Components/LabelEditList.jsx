@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import '../App.css'
 import LabelIcon from '../Images/label.svg'
-import PencilIcon from '../Images/label_edit.svg'
-import ArchiveIcon from '../Images/archive_menu.svg'
-import TrashIcon from '../Images/menu_trash.svg'
 import Grid from '@material-ui/core/Grid';
 import InputBase from '@material-ui/core/InputBase';
 import CheckIcon from '../Images/check.svg' 

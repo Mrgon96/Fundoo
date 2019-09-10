@@ -3,10 +3,8 @@ import '../App.css'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
-import LabelIcon from '../Images/label.svg';
 import CheckIcon from '../Images/check.svg';
 
 import LabelEditList from './LabelEditList'
@@ -108,6 +106,8 @@ export class LabelEdit extends Component {
             handleChange={this.handleChange} />)
             })
             )
+
+
         return (
             <div>
                 <Dialog open={this.props.openEdit}>
@@ -134,7 +134,7 @@ export class LabelEdit extends Component {
                    
                    </DialogContent>
                    <DialogActions>
-                       <Button variant="outlined" onClick={this.props.changeOpenEdit}>
+                       <Button variant="outlined" onClick={this.props.closeOpenEdit}>
                            Done
                        </Button>
                    </DialogActions>

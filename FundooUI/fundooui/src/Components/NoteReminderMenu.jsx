@@ -4,7 +4,7 @@ import Menu from '@material-ui/core/Menu'
 import { MenuItem, TextField } from '@material-ui/core';
 import ClockIcon from '../Images/clock.svg'
 import LeftArrowIcon from '../Images/left_arrow.svg'
-import { createMuiTheme, Divider } from '@material-ui/core';
+import { createMuiTheme} from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import NoteService from '../Services/NoteService'
 
@@ -86,7 +86,7 @@ export class NoteReminderMenu extends Component {
         var today = new Date() 
         var date = today.getDate()
         today.setHours(20,0,0,0)
-        var hours = today.getHours()
+        // var hours = today.getHours()
         var targetName = event.target.id
         try{
             if(targetName==="today"){

@@ -3,8 +3,7 @@ import '../App.css'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
-import { createMuiTheme, Divider } from '@material-ui/core';
+import { createMuiTheme} from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import InputBase from '@material-ui/core/InputBase';
 import CollaborateIcon from '../Images/collaborator.svg'
@@ -13,7 +12,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ColorSelector from './ColorSelector';
 import NoteArchiveEdit from './NoteArchiveEdit';
 import NoteMoreMenu from './NoteMoreMenu';
-import Snackbar from '@material-ui/core/Snackbar';
 import NoteReminderMenu from './NoteReminderMenu';
 import NoteService from '../Services/NoteService'
 const createNote = new NoteService().create_note
@@ -128,7 +126,7 @@ export class NoteEdit extends Component {
             <div className={(this.props.open ? 'note-edit-shift' : 'note-edit')}>
 
                 <ThemeProvider theme={theme} >
-                <Card style={{width:600,height:"auto", marginLeft:300,borderWidth:0.5, borderStyle:"solid", borderColor:"gray", background:this.state.noteColor}}>
+                <Card className="showEditCard" style={{width:"auto  ",height:"auto",borderWidth:0.5, borderStyle:"solid", borderColor:"gray", background:this.state.noteColor}}>
                     <div className="showEdit" style={{display:this.state.noteTitleEdit,height:50}}>
 
                         <CardContent>
@@ -149,8 +147,7 @@ export class NoteEdit extends Component {
                         onChange={this.onChange} 
                         style={{width:"95%"}} 
                         className="noteEditInput" 
-                        multiline={true} 
-                        className="noteEditInput" 
+                        multiline={true}  
                         placeholder="Title">
                         </InputBase> 
 
@@ -159,7 +156,6 @@ export class NoteEdit extends Component {
                         style={{width:"95%"}} 
                         className="noteEditInput" 
                         multiline={true} 
-                        className="noteEditInput" 
                         placeholder="Content">   
                         </InputBase>
 

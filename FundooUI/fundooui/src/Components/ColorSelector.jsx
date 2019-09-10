@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import Menu from '@material-ui/core/Menu'
-// import { MenuItem } from '@material-ui/core';
-// import { createMuiTheme } from '@material-ui/core';
-// import { ThemeProvider } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar'
-import { MenuItem } from '@material-ui/core';
 import ColorPalleteIcon from '../Images/colorPallete.svg'
 import NoteService from '../Services/NoteService'
 

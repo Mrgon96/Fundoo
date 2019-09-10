@@ -2,16 +2,17 @@ import React, { Component } from 'react'
 import MainAppBar from './MainAppBar'
 import Drawer1 from './Drawer1'
 import NoteSection from './NoteSection'
-import NoteEdit from './NoteEdit'
+// import NoteEdit from './NoteEdit'
 import { Redirect } from 'react-router-dom'
 import LabelNotesList from './LabelNotesList'
 import LabelEdit from './LabelEdit'
 import NoteService from '../Services/NoteService'
+import SearchSection from './SearchSection'
 import ArchiveTrashSection from './ArchiveTrashSection';
 import UserService from '../Services/UserService'
 const getLabels = new NoteService().get_Labels
 const getUsers = new UserService().get_all_users
-
+const searchNote = new NoteService().search_Note
 
 export class Dashboard extends Component {
 
@@ -26,7 +27,11 @@ export class Dashboard extends Component {
             labelsList:[],
             openEdit:false,
             at:'',
-            usersList:[]
+            usersList:[],
+            searching:false,
+            searchValue:'',
+            searchedNotes:[],
+            searchResults:[]
             
         }
         this.openDrawer = this.openDrawer.bind(this)
@@ -37,7 +42,12 @@ export class Dashboard extends Component {
         this.renderLabelsList = this.renderLabelsList.bind(this)
         this.changeOpenEdit = this.changeOpenEdit.bind(this)
         this.openArTraSection =this.openArTraSection.bind(this)
-        this.getAllUser = this.getAllUser.bind(this)    
+        this.getAllUser = this.getAllUser.bind(this)  
+        this.isSearching = this.isSearching.bind(this) 
+        this.isNotSearching = this.isNotSearching.bind(this) 
+        this.closeOpenEdit = this.closeOpenEdit.bind(this)
+        this.handleSearchValue = this.handleSearchValue.bind(this)
+        // this.SearchNotes = this.SearchNotes.bind(this)
     }
     
     getAllUser(){
@@ -51,6 +61,53 @@ export class Dashboard extends Component {
         })
     }
 
+    // SearchNotes= (event, searchData)=>{
+        
+    // }
+
+    updateSearchResults(obj){
+        let searchArray=[]
+        searchArray.push(obj)
+        this.setState({
+            searchResults:searchArray
+        })
+    }
+
+    isNotSearching(bool, data){
+        this.setState({
+            searchValue:data,
+            searching:bool,
+            section:'notes',
+            at:'',
+            labelname:'',
+        })
+    }
+
+    handleSearchValue(data){
+        this.setState({
+            searchValue:data
+        })
+        
+        searchNote(data)
+        .then(res=>{
+            this.setState({
+                searchedNotes:res.data
+            })
+            console.log("SErach DATA" ,this.state.searchedNotes)
+        })
+        .catch(error=>{
+            console.log("Error")
+        })
+    }
+    isSearching(bool, data){
+        this.setState({
+            searchValue:data,
+            searching:bool,
+            section:'',
+            at:'',
+            labelname:'',
+        })
+    }
     changeView = event=>{
         this.setState({
             listView:!this.state.listView
@@ -70,9 +127,17 @@ export class Dashboard extends Component {
         })
     }
 
-    changeOpenEdit = e =>{
+    changeOpenEdit = event =>{
         this.setState({
-            openEdit:!this.state.openEdit
+            openEdit:true
+        })
+        this.renderLabelsList();
+        console.log("OPEN EDIT CHANGED", this.state.openEdit)
+    }
+
+    closeOpenEdit =event =>{
+        this.setState({
+            openEdit:false
         })
         this.renderLabelsList();
         console.log("OPEN EDIT CHANGED", this.state.openEdit)
@@ -88,7 +153,9 @@ export class Dashboard extends Component {
     }
     componentDidMount(){
         if(sessionStorage.getItem("userdata")){
-
+            this.setState({
+                redirect:false
+            })
         }
         else{
             this.setState({
@@ -111,7 +178,8 @@ export class Dashboard extends Component {
         this.setState({
             labelname:label_name,
             section:'',
-            at:''
+            at:'',
+            searching:false
         }) 
     }
     openSection(sectionname){
@@ -119,7 +187,8 @@ export class Dashboard extends Component {
         this.setState({
             section:sectionname,
             labelname:'',
-            at:''
+            at:'',
+            searching:false
         })
     }
 
@@ -127,7 +196,8 @@ export class Dashboard extends Component {
         this.setState({
             section:'',
             labelname:'',
-            at:sectionname
+            at:sectionname,
+            searching:false
         })
     }
 
@@ -137,14 +207,17 @@ export class Dashboard extends Component {
             return <Redirect to={'/'} />
         }
 
-        if(this.state.labelname === '' && this.state.at===''){
-            return (
-                <div>
-                    <MainAppBar 
+
+        return (
+            <div>
+                <MainAppBar 
                 openDrawer={this.openDrawer} 
                 handleSignOut={this.handleSignOut}
                 changeView={this.changeView}
-                listView={this.state.listView}
+               listView={this.state.listView}
+                isSearching={this.isSearching} 
+                isNotSearching={this.isNotSearching}
+                handleSearchValue={this.handleSearchValue}
                 />
                 <Drawer1
                 changeOpenEdit={this.changeOpenEdit}
@@ -153,96 +226,66 @@ export class Dashboard extends Component {
                 openLabelSection={this.openLabelSection}
                 openArTraSection={this.openArTraSection}
                 />
-                
-                <NoteSection
-                usersList={this.state.usersList}
-                labelsList={this.state.labelsList}
-                sectionname={this.state.section} 
-                open={this.state.open}
-                listView={this.state.listView}/>
 
-                <LabelEdit 
-                renderLabelsList={this.renderLabelsList}
-                 changeOpenEdit={this.changeOpenEdit}
-                labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
-                </div>
                 
-            )
-        }
-        else if(this.state.section === '' && this.state.at===''){
-            return (
-                <div>
-                    <MainAppBar 
-                openDrawer={this.openDrawer} 
-                handleSignOut={this.handleSignOut}
-                changeView={this.changeView}
-                listView={this.state.listView}
-                />
-                <Drawer1
-                openArTraSection={this.openArTraSection}
-                changeOpenEdit={this.changeOpenEdit}
-                labelsList={this.state.labelsList} 
-                open={this.state.open} openSection={this.openSection} 
-                openLabelSection={this.openLabelSection}
-                />
-                
-                <LabelNotesList
-                usersList={this.state.usersList}
-                labelsList={this.state.labelsList}
-                labelname={this.state.labelname} 
-                open={this.state.open}
-                listView={this.state.listView}/>
+            {(() => {
+                    
+                if(this.state.labelname === '' && this.state.at===''  && this.state.searching===false){
+                    return <NoteSection
+                    updateSearchResults={this.updateSearchResults}
+                    searchedNotes={this.state.searchedNotes}
+                    usersList={this.state.usersList}
+                    labelsList={this.state.labelsList}
+                    sectionname={this.state.section} 
+                    open={this.state.open}
+                    listView={this.state.listView}/>
 
-                <LabelEdit 
-                renderLabelsList={this.renderLabelsList}
-                 changeOpenEdit={this.changeOpenEdit}
-                labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
-                </div>
-                
-                
-            )
-            
-        }
-        else{
-            return (
-            <div>
-                    <MainAppBar 
-                openDrawer={this.openDrawer} 
-                handleSignOut={this.handleSignOut}
-                changeView={this.changeView}
-                listView={this.state.listView}
-                />
-                <Drawer1
-                changeOpenEdit={this.changeOpenEdit}
-                labelsList={this.state.labelsList} 
-                open={this.state.open} openSection={this.openSection} 
-                openLabelSection={this.openLabelSection}
-                openArTraSection={this.openArTraSection}
-                />
-                
-                <ArchiveTrashSection
-                usersList={this.state.usersList}
-                labelsList={this.state.labelsList}
-                at={this.state.at} 
-                open={this.state.open}
-                listView={this.state.listView}/>
+                }
+                else if(this.state.section === '' && this.state.at==='' && this.state.searching===false){
+                    return <LabelNotesList
+                    usersList={this.state.usersList}
+                    labelsList={this.state.labelsList}
+                    labelname={this.state.labelname} 
+                    open={this.state.open}
+                    listView={this.state.listView}/>
 
-                <LabelEdit 
-                renderLabelsList={this.renderLabelsList}
-                 changeOpenEdit={this.changeOpenEdit}
-                labelsList={this.state.labelsList} openEdit={this.state.openEdit}/>
-                </div>
-            )
-            }
-        }
-        // return (
-        //     <div>
-                
-                
+
+                }
+                else if(this.state.searching && this.state.section === '' && this.state.at==='' && this.state.labelname === ''){
+                    return <SearchSection
+                    usersList={this.state.usersList}
+                    labelsList={this.state.labelsList}
+                    sectionname={this.state.section} 
+                    open={this.state.open}
+                    listView={this.state.listView}
+                    searchValue={this.state.searchValue}/>
+                }
+                else{
+                    return <ArchiveTrashSection
+                    updateSearchResults={this.updateSearchResults}
+                    searchedNotes={this.state.searchedNotes}
+                    usersList={this.state.usersList}
+                    labelsList={this.state.labelsList}
+                    at={this.state.at} 
+                    open={this.state.open}
+                    listView={this.state.listView}/>
+                }
+                    
+                })()}   
                
-        //     </div>  
-        // )
+
+               <LabelEdit 
+                renderLabelsList={this.renderLabelsList}
+                
+                labelsList={this.state.labelsList} 
+                openEdit={this.state.openEdit}
+                closeOpenEdit={this.closeOpenEdit}
+                />
+                
+            </div>  
+        )
     }
+}
 
 
 

@@ -11,8 +11,6 @@ import ColorSelector from './ColorSelector';
 import NoteArchiveEdit from './NoteArchiveEdit';
 import NoteMoreMenu from './NoteMoreMenu'
 import NoteReminderMenu from './NoteReminderMenu';
-import { border } from '@material-ui/system';
-import NoteUpdate from './NoteUpdate';
 import InputBase from '@material-ui/core/InputBase';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -20,7 +18,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import NoteService from '../Services/NoteService';
 import CollaborateComponent from './CollaborateComponent'
-import Transition from 'react-transition-group/Transition';
+import { Avatar } from '@material-ui/core'
 const getNote=new NoteService().getOneNote;
 const updateReminder = new NoteService().update_note
 const updateContent = new NoteService().update_note
@@ -94,6 +92,7 @@ export class Note extends Component {
             this.setState({
                 title:res.data.title,
                 content:res.data.content,
+                collaborators:res.data.collaborator
                 // reminder:res.data.reminder,
                 // labels:res.data.labels
             })
@@ -176,9 +175,11 @@ export class Note extends Component {
         labelIds.map((id)=>{
             labelsnames.map((obj)=>{
                 if(obj.id===id){
-                    labelmap1.push(obj)
+                     labelmap1.push(obj)
                 }
+                return labelmap1
             })
+            return labelmap1
         })
 
         var labelmap = labelmap1.map((key)=>{
@@ -193,10 +194,27 @@ export class Note extends Component {
         }
         
         
-        
+        let user_emails = []
+        this.state.collaborators.map((id)=>{
+            this.props.users.map((user)=>{
+
+                if(id===user.pk){
+                    user_emails.push(user)
+                }
+                return user_emails
+            })
+            return user_emails
+        })
+
+        const collaboratorMap = user_emails.map((user)=>{
+            
+            return <Tooltip title={user.email}>
+                <Avatar style={{height:30, width:30, color:"black"}}>{user.username[0]}</Avatar>
+                </Tooltip>
+        })
+
         var well="3px 5px 10px #9E9E9E"
         var borderCard="0.4px solid gray"
-        var transitionValue = "5s"
         
 
         return (
@@ -226,7 +244,7 @@ export class Note extends Component {
                         <div>
                         {labelmap}
                         {reminder}
-
+                        {collaboratorMap}
                         </div>
                         
                         
@@ -240,7 +258,12 @@ export class Note extends Component {
                     
                     </Tooltip>
                     <Tooltip title="Collaborator">
-                    <CollaborateComponent users={this.props.users} id={this.state.id} collaborators={this.state.collaborators}/>
+                    <CollaborateComponent 
+                    users={this.props.users} 
+                    id={this.state.id} 
+                    collaborators={this.state.collaborators}
+                    updatedNoteRender={this.updatedNoteRender}
+                    />
                     </Tooltip>
 
                     <Tooltip title="Colors">
@@ -284,7 +307,6 @@ export class Note extends Component {
                     style={{width:"95%"}} 
                     className="noteEditInput" 
                     multiline={true}  
-                    className="noteEditInput" 
                     placeholder="Title"
                     onChange={this.onChange}
                     ></InputBase> 
@@ -299,7 +321,6 @@ export class Note extends Component {
                     style={{width:"95%"}} 
                     className="noteEditInput" 
                     multiline={true}  
-                    className="noteEditInput" 
                     placeholder="Content"   
                     onChange={this.onChange}
                     >
@@ -308,6 +329,7 @@ export class Note extends Component {
 
                     {labelmap}
                     {reminder}
+                    {collaboratorMap}
                     </DialogContent> 
                         
                         

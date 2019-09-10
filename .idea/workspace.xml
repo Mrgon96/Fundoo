@@ -3,18 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="fcd325e0-a40e-41b0-b1c5-0469445a53e8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooApp/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/notes/documents.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/notes/documents.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/notes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/notes/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooApp/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/users/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/ArchiveTrashSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/ArchiveTrashSection.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/CollaborateComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/CollaborateComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/ColorSelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/ColorSelector.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/LabelNotesList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/LabelNotesList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Drawer1.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Drawer1.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/LabelEdit.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/LabelEdit.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/LabelEditList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/LabelEditList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/MainAppBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/MainAppBar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Note.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Note.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/NoteEdit.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/NoteEdit.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/NoteMoreMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/NoteMoreMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/NoteReminderMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/NoteReminderMenu.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/NoteSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/NoteSection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Notes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Notes.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Services/UserService.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Services/UserService.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Services/NoteService.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Services/NoteService.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
