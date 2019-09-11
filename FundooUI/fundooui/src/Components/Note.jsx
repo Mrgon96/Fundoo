@@ -152,7 +152,7 @@ export class Note extends Component {
         let noteWidth = 230
         var listViewmargin = "20px"
         if(this.props.listView){
-            listViewmargin="20px 20px 20px 200px"
+            listViewmargin="20px 20px 20px"
             noteWidth = 600
             console.log("NOTE WIDTH",this.props.listView, noteWidth)
         }
