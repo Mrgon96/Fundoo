@@ -85,6 +85,11 @@ export class NoteMoreMenu extends Component {
         })
 
     }
+
+
+    handleChange = event =>{
+        console.log(event.target)
+    }
     render() {
         // console.log("LABEL LIST IS HERE =====", this.props.labelsList , "L:abels" , this.state.labels)
         // const labelsAre = this.props.labelsList;
@@ -103,7 +108,7 @@ export class NoteMoreMenu extends Component {
                         <div>
                              <FormControlLabel
                         control={
-                        <Checkbox   />
+                        <Checkbox id={key.name} checked={true} onClick={this.handleChange}/>
                         }   
                         label={key.name}
                          />

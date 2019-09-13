@@ -4,6 +4,7 @@
     :overview:
 
 """
+import datetime
 
 import jwt
 from django.contrib.sites.shortcuts import get_current_site
@@ -15,6 +16,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework import status
 from .send_mail import SendMail
+from .SendMailQueue import SendMailQueue
+
 
 
 @api_view(["POST"])
@@ -45,7 +48,8 @@ def fogot_password(request):
         else:
             # payload for generating token
             payload = {
-                "username": user.username
+                "username": user.username,
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=30)
             }
 
             # token generation
@@ -58,8 +62,8 @@ def fogot_password(request):
             current_site = get_current_site(request)
 
             # make object of SendMail class and call sendmail function
-            s = SendMail()
-            s.sendmail(type=type, user=user, token=token, current_site=current_site)
+            s = SendMailQueue()
+            s.send(type=type, user=user, token=token, current_site=current_site)
             return Response({'user': user.username}, status=status.HTTP_200_OK)
 
     except ValueError:
@@ -67,6 +71,7 @@ def fogot_password(request):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes((AllowAny,))
 def reset_password(request, uidb64, token):
     """
 
@@ -121,3 +126,10 @@ def reset_password(request, uidb64, token):
             "password": "user not present"
         }
         return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+
+    except jwt.ExpiredSignatureError:
+        response_data = {
+            "error": "Invalid Link Retry Again"
+        }
+        return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+

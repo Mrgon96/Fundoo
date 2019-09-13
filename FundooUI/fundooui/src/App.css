@@ -26,7 +26,7 @@
   bottom: 0;
   left: 0;
   width: 500px;
-  height: 300px;
+  height: 400px;
   text-align: center;
   background: rgb(255, 255, 255);
   border-radius: 25px;
@@ -567,7 +567,8 @@
   position: relative;
   /* background: lightgreen; */
   transition: 1s;
-  margin-left: 0px;
+  margin-left: auto;
+  margin-right: 100px;
 }
 
 .Notesection-shift{
@@ -576,7 +577,7 @@
   width: 90%;
   position: relative;
   /* background: lightgreen; */
-  margin-left: 30px;
+  margin-left: 50px;
   transition: 0.7s;
 }
 
@@ -631,6 +632,10 @@
     display: none;  
   }
 
+  /* .red{
+    width: 300px;
+    height: 400px;
+  } */
 
 .title{
   text-align: center;
@@ -648,11 +653,13 @@
     cursor: pointer;
     border: 1px solid #000000;
     margin-left: auto;
-    margin-right: 10px;
+    margin-right: 20px;
   }
 
   .gridIcon{
     display: none;
+    /* margin-left:200px;
+    margin-right: 20px; */
   }
 
 
@@ -667,6 +674,7 @@
   }
 
   .NoteGrid{
+    /* background: red; */
     margin-right: 20px;
     margin-left: auto;
     width: 80%;
@@ -677,8 +685,6 @@
 .Notesection{
   height: 70%;
   width: 100%;
-  position: relative;
-  /* background: lightgreen; */
   transition: 1s;
 
 }
@@ -687,8 +693,6 @@
   display: block;
   height: 70%;
   width: 90%;
-  position: relative;
-  /* background: lightgreen; */
   margin-left: 30px;
   transition: 0.7s;
 }
@@ -735,7 +739,7 @@
   
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 460px) {
   .search{
     display: none;  
   }
@@ -745,7 +749,7 @@
     cursor: pointer;
     border: 1px solid #ff0000;
     margin-left: auto;
-    margin-right: 10px;
+    margin-right: 20px;
   }
 
   .gridIcon{
@@ -835,7 +839,11 @@
 
 
 
-@media screen and (max-width: 222px) {
+@media screen and (max-width: 270px) {
+  .title{
+    display: none;
+  }
+
   .search{
     display: none;  
   }
@@ -846,7 +854,7 @@
     width: 40px;
     border: 1px solid #ff0000;
     margin-left: auto;
-    margin-right: 0px;
+    margin-right: 20px;
   }
 
   .gridIcon{

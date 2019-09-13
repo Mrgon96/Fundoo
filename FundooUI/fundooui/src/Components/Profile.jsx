@@ -15,33 +15,53 @@ export class Profile extends Component {
   constructor(){
     super();
     this.imagePreviewCanvas=React.createRef()
-    this.image = React.createRef()
     this.state={
-      base64Data:null,
-      // fileUploaded:'',
+      imgSrc:null,
       crop: {
         aspect: 1/1
       }
+      // image:{
+      //   base64Data:null,
+      // fileUploaded:'',
+      // },
+      // crop: {
+      //   aspect: 1/1  
+      // },
+      // croppedImage:{
+      //   imgSrc:null,
+      //   crop: {
+      //     aspect: 1/1
+      //   }
+      // }
     }
   }
 
   onChangeFile = event =>{
     let file = event.target.files[0];
     let reader = new FileReader();
-    reader.readAsDataURL(file);
     reader.onloadend = () => {
+      // var image = {...this.state.image}
+      // image.fileUploaded=file
+      // image.base64Data=reader.result
+      // var croppedImage = {...this.state.croppedImage}
+      // croppedImage.imgSrc=reader.result
+      // croppedImage.crop = this.state.crop
       this.setState({
-        base64Data: reader.result
+        // image,
+        // croppedImage
+        imgSrc:reader.result
       });
+      console.log(this.state)
       
     };
+    reader.readAsDataURL(file);
     this.image = URL.createObjectURL(file)
   }
 
 
   handleCropChange = (crop) =>{
     this.setState({
-        crop
+        crop:crop
     })
   }
 
@@ -54,17 +74,18 @@ export class Profile extends Component {
     console.log(crop, pixelCrop)
 
     const canvasRef = this.imagePreviewCanvas.current
-    const imgSrc = this.state
+    const {imgSrc} = this.state
     image64toCanvasRef(canvasRef, imgSrc, pixelCrop)
   }
 
 
     render() {
-      let displayImage="none"
-      if(this.state.fileUploaded!==''){
-        displayImage="block"
-      }
+      // let displayImage="none"
+      // if(this.state.fileUploaded!==''){
+      //   displayImage="block"
+      // }
         // console.log(this.props.openDialog)
+        // let {imgSrc} = this.state
         return (
             <Dialog open={this.props.openDialog}
             PaperProps={{
@@ -82,10 +103,10 @@ export class Profile extends Component {
           {/* <img src={this.state.fileUploaded} style={{width:200,height:200, display:displayImage}}></img> */}
         
           <ReactCrop 
-          src={this.image} 
+          src={this.imgSrc}
           crop={this.state.crop} 
-          onChange={this.handleCropChange}
           onImageLoaded={this.handleImageLoaded}
+          onChange={this.handleCropChange} 
           onComplete={this.handleOnCropComplete}
           />
           <br></br>

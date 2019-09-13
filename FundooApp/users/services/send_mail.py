@@ -61,7 +61,7 @@ class SendMail:
             message = render_to_string('password_reset.html',
                                        {
                                            'user': user,
-                                           'domain': current_site.domain,
+                                           'domain': "localhost:3000",
                                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                                            'token': token
                                        })
