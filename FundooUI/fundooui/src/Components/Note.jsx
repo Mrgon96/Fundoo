@@ -55,7 +55,7 @@ export class Note extends Component {
             reminder:reminderDate
         })
     }
-
+    
     deleteReminder = event =>{
         let id=this.state.id
         var reminderData = {
@@ -148,6 +148,7 @@ export class Note extends Component {
             displayCard="none"
         }
 
+        // console.log("GETTING ALL NOTES", this.props.getAllNotes)
         
         let noteWidth = 230
         var listViewmargin = "20px"
@@ -208,8 +209,8 @@ export class Note extends Component {
 
         const collaboratorMap = user_emails.map((user)=>{
             
-            return <Tooltip title={user.email}>
-                <Avatar style={{height:30, width:30, color:"black"}}>{user.username[0]}</Avatar>
+            return <Tooltip key={user.username} title={user.email}>
+                <Avatar  style={{height:30, width:30, color:"black"}}>{user.username[0]}</Avatar>
                 </Tooltip>
         })
 
@@ -230,7 +231,7 @@ export class Note extends Component {
                     width:noteWidth,
                     display:displayCard, 
                     transitionDuration:1,
-                    
+                    maxHeight:300
                     }}
                     
                     >
@@ -277,13 +278,11 @@ export class Note extends Component {
 
                     <Tooltip title="Archive">
                      <NoteArchiveEdit 
-                     
-                     
                     getAllNotes={this.props.getAllNotes} id={this.state.id} changeColor={this.changeColor} is_archive={this.state.is_archive}/>
                     </Tooltip>
 
                     <Tooltip title="More">
-                    <NoteMoreMenu  labelmap1={labelmap1} labels={this.state.labels} id={this.state.id} getAllNotes={this.props.getAllNotes}/>
+                    <NoteMoreMenu labelsList={this.props.labelsList}  labelmap1={labelmap1} labels={this.state.labels} id={this.state.id} getAllNotes={this.props.getAllNotes}/>
                     </Tooltip>
                     </div>
                 </CardActions>
@@ -300,21 +299,17 @@ export class Note extends Component {
                   }} 
                   onClose={()=>{this.setState({openDialog:false})}}>
 
-                    <DialogTitle >
+                    <DialogContent>
                     <InputBase 
                     id="title"
                     defaultValue={title} 
-                    style={{width:"95%"}} 
+                    style={{width:"95%", fontWeight:700}} 
                     className="noteEditInput" 
                     multiline={true}  
                     placeholder="Title"
                     onChange={this.onChange}
                     ></InputBase> 
-                    </DialogTitle>
-
                     
-                    
-                    <DialogContent>
                     <InputBase
                     id="content"
                     defaultValue={content} 

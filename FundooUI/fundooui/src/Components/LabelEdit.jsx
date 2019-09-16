@@ -89,6 +89,11 @@ export class LabelEdit extends Component {
     handleChange = (e, id) =>{
         console.log("EVENT NAME", e.target)
     }
+
+    closeEdit = event =>{
+        console.log('event', event)
+        this.props.closeOpenEdit(false);
+    }
     render() {
         
         
@@ -134,7 +139,7 @@ export class LabelEdit extends Component {
                    
                    </DialogContent>
                    <DialogActions>
-                       <Button variant="outlined" onClick={this.props.closeOpenEdit}>
+                       <Button variant="outlined" onClick={this.closeEdit}>
                            Done
                        </Button>
                    </DialogActions>

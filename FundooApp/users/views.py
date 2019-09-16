@@ -59,7 +59,7 @@ def logout(request):
     """
 
     redis.flush()  # clearing redis cache when user logs out
-    auth_logout(request)  # logout user
+    # auth_logout(request)  # logout user
 
     return render(request, 'register.html')
 

@@ -8,125 +8,128 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import {image64toCanvasRef} from './ResuableUtils'
+import { image64toCanvasRef } from './ResuableUtils'
 import { width } from '@material-ui/system';
 
 export class Profile extends Component {
   constructor(){
     super();
-    this.imagePreviewCanvas=React.createRef()
-    this.state={
-      imgSrc:null,
-      crop: {
-        aspect: 1/1
-      }
-      // image:{
-      //   base64Data:null,
-      // fileUploaded:'',
-      // },
-      // crop: {
-      //   aspect: 1/1  
-      // },
-      // croppedImage:{
-      //   imgSrc:null,
-      //   crop: {
-      //     aspect: 1/1
-      //   }
-      // }
+    this.state = {
+      src: null,
+    crop: {
+      unit: "%",
+      width: 30,
+      aspect: 1
+    },
+    croppedImageUrl:null
     }
   }
 
-  onChangeFile = event =>{
-    let file = event.target.files[0];
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      // var image = {...this.state.image}
-      // image.fileUploaded=file
-      // image.base64Data=reader.result
-      // var croppedImage = {...this.state.croppedImage}
-      // croppedImage.imgSrc=reader.result
-      // croppedImage.crop = this.state.crop
-      this.setState({
-        // image,
-        // croppedImage
-        imgSrc:reader.result
-      });
-      console.log(this.state)
-      
-    };
-    reader.readAsDataURL(file);
-    this.image = URL.createObjectURL(file)
+
+  onSelectFile = e => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () =>
+        this.setState({ src: reader.result })
+      );
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+
+  onImageLoaded = image => {
+    this.imageRef = image;
+  };
+
+  onCropComplete = crop => {
+    this.makeClientCrop(crop);
+  };
+
+  onCropChange = (crop, percentCrop) => {
+    this.setState({ crop });
+  };
+
+  async makeClientCrop(crop) {
+    if (this.imageRef && crop.width && crop.height) {
+      const croppedImageUrl = await this.getCroppedImg(
+        this.imageRef,
+        crop,
+        "newFile.jpeg"
+      );
+      this.setState({ croppedImageUrl });
+    }
   }
 
+  getCroppedImg(image, crop, fileName) {
+    const canvas = document.createElement("canvas");
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext("2d");
 
-  handleCropChange = (crop) =>{
-    this.setState({
-        crop:crop
-    })
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (!blob) {
+          //reject(new Error('Canvas is empty'));
+          console.error("Canvas is empty");
+          return;
+        }
+        blob.name = fileName;
+        window.URL.revokeObjectURL(this.fileUrl);
+        this.fileUrl = window.URL.createObjectURL(blob);
+        resolve(this.fileUrl);
+      }, "image/jpeg");
+    });
   }
 
-
-  handleImageLoaded = (image) =>{
-    console.log("IMAGE", image)
-  }
-
-  handleOnCropComplete = (crop, pixelCrop) =>{
-    console.log(crop, pixelCrop)
-
-    const canvasRef = this.imagePreviewCanvas.current
-    const {imgSrc} = this.state
-    image64toCanvasRef(canvasRef, imgSrc, pixelCrop)
-  }
-
-
-    render() {
-      // let displayImage="none"
-      // if(this.state.fileUploaded!==''){
-      //   displayImage="block"
-      // }
-        // console.log(this.props.openDialog)
-        // let {imgSrc} = this.state
-        return (
-            <Dialog open={this.props.openDialog}
-            PaperProps={{
-              style:{
-                width:"95%",
-                height:"400px"
-              }
-            }}>
-                <DialogTitle>Profile Pic</DialogTitle>
+  render() {
+    return (
+<Dialog open={this.props.openDialog}
+        PaperProps={{
+          style: {
+            width: "95%",
+            height: "auto"
+          }
+        }}>
+        <DialogTitle>Profile Pic</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Change Your Profile Pic Here
-          </DialogContentText>
-          <TextField onChange={this.onChangeFile} type="file" variant="standard"></TextField>
-          {/* <img src={this.state.fileUploaded} style={{width:200,height:200, display:displayImage}}></img> */}
-        
-          <ReactCrop 
-          src={this.imgSrc}
-          crop={this.state.crop} 
-          onImageLoaded={this.handleImageLoaded}
-          onChange={this.handleCropChange} 
-          onComplete={this.handleOnCropComplete}
-          />
-          <br></br>
-          <p>Preview Canvas</p>
-          <canvas
-          ref={this.imagePreviewCanvas}
-          >
-
-
-          </canvas>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.props.openDialogBox} color="primary">
-            Cancel
-          </Button>
-          
-        </DialogActions>
-            </Dialog>
-        )
-    }
+          </DialogContentText> 
+<div className="App">
+<div>
+  <input type="file" onChange={this.onSelectFile} />
+</div>
+{this.state.src && (
+  <ReactCrop
+    src={this.state.src}
+    crop={this.state.crop}
+    onImageLoaded={this.onImageLoaded}
+    onComplete={this.onCropComplete}
+    onChange={this.onCropChange}
+  />
+)}
+{this.state.croppedImageUrl && (
+  <img alt="Crop" style={{ maxWidth: "100%" }} src={this.state.croppedImageUrl} />
+)}
+ </div>
+       </DialogContent>
+      </Dialog>
+    )
+  }
 }
 
 export default Profile

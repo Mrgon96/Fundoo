@@ -5,6 +5,7 @@
 
 """
 import pickle
+import mimetypes
 # from django_elasticsearch_dsl_drf.constants import (
 #     LOOKUP_FILTER_RANGE,
 #     LOOKUP_QUERY_IN,
@@ -306,11 +307,11 @@ def search(request):
     # empty list
     data = []
     #request data
-    s = request.GET.get('search')
-    if s:
+    search = request.GET.get('search')
+    if search:
         # note search query
         # notes = NoteDocument.search().query("match", title__auto=s)
-        notes = NoteDocument.search().query(Q('match', title=s) | Q('match', content=s))
+        notes = NoteDocument.search().query(Q('match', title=search) | Q('match', content=search))
         # making dictionary of notes obtained
         # note_ser = NoteSerializer(notes, many=True)
         # print(note_ser.data, "Elsactic search Data")
@@ -451,3 +452,26 @@ def create_collaborator(request, note_id):
 #     }
 #
 #     ordering = ('id',)
+
+@permission_classes((AllowAny,))
+class Importfile(APIView):
+
+    def post(self, request):
+        response ={}
+        try:
+            json_file = request.FILES.get('json_file')
+
+            if json_file is None:
+                return Response({'data':'No file'}, status=400)
+            else:
+                file_type = mimetypes.guess_type(json_file.name)
+                # file_extension = mimetypes.guess_extension(json_file.name)
+                file_extension = file_type[0]
+
+                if file_extension == "application/json":
+                    return Response({'data': file_type[0]}, status=200)
+                else:
+                    return Response({'data': 'not a json file'}, status=200)
+
+        except Exception:
+            return Response({'data': 'No file'}, status=400)

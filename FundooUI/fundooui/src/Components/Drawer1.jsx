@@ -94,6 +94,11 @@ export class Drawer1 extends Component {
         this.props.openArTraSection('trash')
     }
 
+    openEdit = event => {
+        this.props.changeOpenEdit(true);
+        
+    }
+
     render() {
 
         // console.log(this.props.labelsList, "LABELSLIST")
@@ -144,7 +149,7 @@ export class Drawer1 extends Component {
                     {labelListMap}
                     
                     
-                    <div className="drawer-list" onClick={this.props.changeOpenEdit}>
+                    <div className="drawer-list" onClick={this.openEdit}>
                         <div className="drawer-icon">
                         <img src={PencilIcon} alt="Edit Labels"/>
                         </div>

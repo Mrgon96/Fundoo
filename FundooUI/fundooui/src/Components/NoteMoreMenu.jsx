@@ -16,6 +16,7 @@ export class NoteMoreMenu extends Component {
     constructor(){
         super();
         this.state = {
+            LabelMap: [],
             anchorEl : null,
             menuopen : false,
             labels:[],
@@ -26,29 +27,66 @@ export class NoteMoreMenu extends Component {
         this.handleClick=this.handleClick.bind(this)
         this.handleMenuClose=this.handleMenuClose.bind(this)
         this.handleTrash = this.handleTrash.bind(this)
-        this.renderLabelsList = this.renderLabelsList.bind(this)
+        // this.renderLabelsList = this.renderLabelsList.bind(this)
         
     }
 
     componentDidMount(){
-        this.setState({
-            labels:this.props.labels
-        })
-        this.renderLabelsList();
-        // console.log("This Labels List is:", this.props.labelsList)
+        this.labelMapping();
     }
 
-    renderLabelsList = event =>{
-        getLabels()
-        .then(res=>{
-            this.setState({
-                labelsList:res.data,
+
+    labelMapping(){
+        console.log("This Labels List is:", this.props.labels, this.props.labelsList)
+        let labelIds = this.props.labels 
+        this.setState({
+            labels:labelIds,
+            labelsList:this.props.labelsList,
+        })
+        // this.renderLabelsList();
+        console.log("This Labels List is:", this.state.labels)
+        
+        
+        const mapIS = (this.state.labelsList).map((obj)=>{
+            console.log(obj, "Label Object")
+            this.props.labels.map((lid)=>{
+                console.log(obj, "Label ID")
+                if(obj.id===lid){
+                    let labelObj={
+                        id:obj.id,
+                        name:obj.name,
+                        checked:true
+                    }
+                    mapIS.push(labelObj)
+                }
+                else{
+                    let labelObj={
+                        id:obj.id,
+                        name:obj.name,
+                        checked:false
+                    }
+                    mapIS.push(labelObj)
+                }
             })
         })
-        .catch(error=>{
-            console.log(error);
-        })
+
+        console.log("MAPPED LABELS IS", mapIS)
+        
+       this.setState({
+           LabelMap:mapIS 
+       })
     }
+    // renderLabelsList = event =>{
+    //     getLabels()
+    //     .then(res=>{
+    //         this.setState({
+    //             labelsList:res.data,
+    //         })
+    //     })
+    //     .catch(error=>{
+    //         console.log(error);
+    //     })
+    // }
 
    
     handleClick = event => {
@@ -88,49 +126,28 @@ export class NoteMoreMenu extends Component {
 
 
     handleChange = event =>{
-        console.log(event.target)
+        console.log(this.state.LabelMap)
     }
+
     render() {
-        // console.log("LABEL LIST IS HERE =====", this.props.labelsList , "L:abels" , this.state.labels)
-        // const labelsAre = this.props.labelsList;
-        // const labels = this.state.labels.map((key)=>{
-        //     return <checkbox key={key.id} id={key.id}  label={key.name}></checkbox>
-        // })
-        // console.log("LABELS LIST", this.props.labelsList)
 
-
+        let map = this.state.LabelMap.map((key)=>{
+                    
+            return (
+                   <div>
+                        <FormControlLabel
+                   control={
+                   <Checkbox key={key.id} id={key.name} name={key.name} value={key.name}  onChange={this.handleChange}/>
+                   }   
+                   label={key.name}
+                    />
+                   </div>
+                  
+               )
+       })
 
         console.log("LABELS OF NOTE", this.props.labels, this.props.id)
-        
-        const map = this.state.labelsList.map((key)=>{
-                    
-                 return (
-                        <div>
-                             <FormControlLabel
-                        control={
-                        <Checkbox id={key.name} checked={true} onClick={this.handleChange}/>
-                        }   
-                        label={key.name}
-                         />
-                        </div>
-                       
-                    )
-                // }
-                // else{
-                //     return (
-                //         <div>
-                //              <FormControlLabel
-                //         control={
-                //         <Checkbox   />
-                //         }   
-                //         label={key.name}
-                //          />
-                //         </div>
-                       
-                //     )
-                // }
-            })
-            // })
+
 
         return (
             

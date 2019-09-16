@@ -33,8 +33,11 @@ export class LabelEditList extends Component {
     }
     render() {
         const image=CheckIcon
+        let id_label = toString(this.props.data.id)
 
         return (
+
+            
             <div>
                 <Grid container justify="flex-start" style={{width:300}}>
  
@@ -55,7 +58,7 @@ export class LabelEditList extends Component {
 
 
                 <InputBase 
-                id={this.props.data.id}
+                id={id_label}
                 name="labelName"
                 defaultValue={this.props.data.name} 
                 onChange={this.onChangeValue}

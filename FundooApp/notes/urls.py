@@ -23,4 +23,5 @@ urlpatterns = [
     path('labels/<int:pk>/', note_views.LabelsDetails.as_view(), name="label_detail"),
     path('search/', note_views.search, name='search'),
     path('collaborators/<int:note_id>/', note_views.create_collaborator, name="collaborators"),
+    path('import/', note_views.Importfile.as_view(), name="import_file")
 ]

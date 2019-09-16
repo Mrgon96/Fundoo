@@ -127,17 +127,17 @@ export class Dashboard extends Component {
         })
     }
 
-    changeOpenEdit = event =>{
+    changeOpenEdit(data){
         this.setState({
-            openEdit:true
+            openEdit:data
         })
         this.renderLabelsList();
         console.log("OPEN EDIT CHANGED", this.state.openEdit)
     }
 
-    closeOpenEdit =event =>{
+    closeOpenEdit(data){
         this.setState({
-            openEdit:false
+            openEdit:data
         })
         this.renderLabelsList();
         console.log("OPEN EDIT CHANGED", this.state.openEdit)

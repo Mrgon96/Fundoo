@@ -22,7 +22,7 @@ export class Notes extends Component {
     //         data:this.props.data
     //     })
     // }
-
+    
     render() {
         let listView = this.props.listView
 
@@ -37,7 +37,7 @@ export class Notes extends Component {
         })
 
         return (
-            <div className="NoteGrid" style={{borderColor:"black", borderStyle:"solid", borderWidth:1}}>
+            <div className="NoteGrid" >
                 <Grid 
                     container justify={gridAdjust}
                     alignItems="center">

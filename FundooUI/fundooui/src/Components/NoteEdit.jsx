@@ -130,7 +130,7 @@ export class NoteEdit extends Component {
                     <div className="showEdit" style={{display:this.state.noteTitleEdit,height:50}}>
 
                         <CardContent>
-                        <InputBase  style={{height:0.56, marginBottom:20}} onClick={this.handleClick} className="noteEditInput" placeholder="Take a Note....">
+                        <InputBase  style={{height:0.56, marginBottom:20, marginRight:"auto"}} onClick={this.handleClick} placeholder="Take a Note....">
                             </InputBase>
 
 
