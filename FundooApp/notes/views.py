@@ -6,6 +6,10 @@
 """
 import pickle
 import mimetypes
+import json
+from django.core import serializers
+
+from rest_framework import parsers
 # from django_elasticsearch_dsl_drf.constants import (
 #     LOOKUP_FILTER_RANGE,
 #     LOOKUP_QUERY_IN,
@@ -23,11 +27,13 @@ import mimetypes
 # from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from django.contrib.auth.models import User
 from elasticsearch_dsl.query import Q
+from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
+from setuptools.command.dist_info import dist_info
 from users.services.Redis_Service import RedisCache
 from users.services.s3_service import ImageUpload
 from .serializers import NoteSerializer, LabelSerializer
@@ -456,22 +462,46 @@ def create_collaborator(request, note_id):
 @permission_classes((AllowAny,))
 class Importfile(APIView):
 
+    # parser_classes = (parsers.JSONParser,)
+    parser_classes = (MultiPartParser,)
+
     def post(self, request):
-        response ={}
+        # response ={}
         try:
             json_file = request.FILES.get('json_file')
+            print(request.data, "==================", json_file)
 
             if json_file is None:
                 return Response({'data':'No file'}, status=400)
             else:
-                file_type = mimetypes.guess_type(json_file.name)
-                # file_extension = mimetypes.guess_extension(json_file.name)
-                file_extension = file_type[0]
+                file_type = mimetypes.guess_type(json_file.name)[0]
+            # file_extension = mimetypes.guess_extension(json_file.name)
+            #     file_extension = file_type[0]
 
-                if file_extension == "application/json":
-                    return Response({'data': file_type[0]}, status=200)
+                if file_type == "application/json":
+
+                    lines = json_file.read().decode("UTF-8")
+
+                    json_data = json.loads(lines)
+                    # print(data)
+                    # print(json_data['data'])
+                    serializer = NoteSerializer(data=json_data['data'], many=True)
+                    print("VALIDATINGGG", serializer.validate(attrs=json_data['data']))
+                    if serializer.is_valid():
+                        serializer.save()
+
+                    return Response(serializer.data, status=200)
+                    # else:
+                    #     raise NoteSerializer.errors
+
                 else:
                     return Response({'data': 'not a json file'}, status=200)
-
-        except Exception:
+        #
+        # except :
+            # return Response({'data': 'No file'}, status=400)
+        except Exception as e:
+            print(type(e).__name__, "EXCEPTION")
             return Response({'data': 'No file'}, status=400)
+        #
+        # except NoteSerializer.errors:
+        #     return Response({'data': 'Serialization Error'}, status=400)

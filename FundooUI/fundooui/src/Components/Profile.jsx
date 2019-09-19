@@ -126,6 +126,7 @@ export class Profile extends Component {
   <img alt="Crop" style={{ maxWidth: "100%" }} src={this.state.croppedImageUrl} />
 )}
  </div>
+ <h1>{this.fileUrl}</h1>
        </DialogContent>
       </Dialog>
     )

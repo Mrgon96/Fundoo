@@ -29,6 +29,7 @@ from .decorators import user_login_required
 from .services.Redis_Service import RedisCache
 from django.views.decorators.csrf import csrf_exempt
 from .services.s3_service import ImageUpload
+from .services.RabbitMqService import RabbitMqService
 from .models.profile_model import UserProfile
 from .util import Util
 from .serializers import UserProfilePic
@@ -37,7 +38,7 @@ fileUpload = ImageUpload()
 # making object of redis service class
 redis = RedisCache()
 util = Util()
-
+rabbit_mq = RabbitMqService()
 # simple function to render to home
 @user_login_required
 def home(request):

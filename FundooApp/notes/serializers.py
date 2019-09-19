@@ -56,10 +56,21 @@ class NoteSerializer(serializers.ModelSerializer):
 
 
         def create(self, validated_data):
-            labels = validated_data.pop('labels')
+            # labels = validated_data.pop('labels')
+            # if type(validated_data) == list:
+            #     notes = []
+            #     for data in validated_data:
+            #         try:
+            #             note = NoteInfo.objects.create(**data)
+            #             notes.append(note)
+            #         except Exception :
+            #             pass
+            #
+            #         return notes
+            # else:
             note = NoteInfo.objects.create(**validated_data)
-            for label in labels:
-                Labels.objects.create(**label)
+            # for label in labels:
+            #     Labels.objects.create(**label)
             return note
             # return NoteInfo.objects.create(**validated_data)
             # labels_data = validated_data.pop('labels')

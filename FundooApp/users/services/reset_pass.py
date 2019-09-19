@@ -17,6 +17,8 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework import status
 from .send_mail import SendMail
 from .SendMailQueue import SendMailQueue
+from .RabbitMqService import RabbitMqService
+rabbit_mq = RabbitMqService()
 
 
 
@@ -62,8 +64,9 @@ def fogot_password(request):
             current_site = get_current_site(request)
 
             # make object of SendMail class and call sendmail function
-            s = SendMailQueue()
-            s.send(type=type, user=user, token=token, current_site=current_site)
+            # s = SendMailQueue()
+            # s.send(type=type, user=user, token=token, current_site=current_site)
+            rabbit_mq.send_email(type=type, user=user, token=token, current_site=current_site)
             return Response({'user': user.username}, status=status.HTTP_200_OK)
 
     except ValueError:
