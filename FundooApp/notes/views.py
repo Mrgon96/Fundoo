@@ -496,12 +496,12 @@ class Importfile(APIView):
 
                 else:
                     return Response({'data': 'not a json file'}, status=200)
-        #
-        # except :
-            # return Response({'data': 'No file'}, status=400)
+
+        except :
+            return Response({'data': 'No file'}, status=400)
         except Exception as e:
             print(type(e).__name__, "EXCEPTION")
             return Response({'data': 'No file'}, status=400)
-        #
-        # except NoteSerializer.errors:
-        #     return Response({'data': 'Serialization Error'}, status=400)
+
+        except NoteSerializer.errors:
+            return Response({'data': 'Serialization Error'}, status=400)
