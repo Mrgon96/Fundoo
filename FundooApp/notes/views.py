@@ -323,21 +323,26 @@ def search(request):
         # print(note_ser.data, "Elsactic search Data")
         note_data = {'data': notes}
         # notes in json data
+        ids = []
         for i in note_data['data']:
 
             data1 = {}
             data1['id'] = i.id
-            data1['title'] = i.title
-            data1['content'] = i.content
-            data1['url'] = i.url
-            data1['image']=i.image
-            data1['is_archive']=i.is_archive
-            data1['is_pin']=i.is_pin
-            data1['is_trash']=i.is_trash
+            ids.append(i.id)
+
+        notes = NoteInfo.objects.filter(id__in=ids)
+        note_ser = NoteSerializer(notes, many=True)
+
+
+
+
 
             # append data in note to data
-            data.append(data1)
+            # data.append(data1)
         # print(data)
+        data = {
+            'notes': note_ser.data
+        }
 
     else:
         data = {
@@ -497,11 +502,11 @@ class Importfile(APIView):
                 else:
                     return Response({'data': 'not a json file'}, status=200)
 
-        except :
-            return Response({'data': 'No file'}, status=400)
+        # except :
+            # return Response({'data': 'No file'}, status=400)
         except Exception as e:
             print(type(e).__name__, "EXCEPTION")
             return Response({'data': 'No file'}, status=400)
 
-        except NoteSerializer.errors:
-            return Response({'data': 'Serialization Error'}, status=400)
+        # except NoteSerializer.errors:
+            # return Response({'data': 'Serialization Error'}, status=400)

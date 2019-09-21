@@ -91,7 +91,7 @@ export class Dashboard extends Component {
         searchNote(data)
         .then(res=>{
             this.setState({
-                searchedNotes:res.data
+                searchedNotes:res.data.notes
             })
             console.log("SErach DATA" ,this.state.searchedNotes)
         })
@@ -253,6 +253,7 @@ export class Dashboard extends Component {
                 }
                 else if(this.state.searching && this.state.section === '' && this.state.at==='' && this.state.labelname === ''){
                     return <SearchSection
+                    searchedNotes={this.state.searchedNotes}
                     usersList={this.state.usersList}
                     labelsList={this.state.labelsList}
                     sectionname={this.state.section} 

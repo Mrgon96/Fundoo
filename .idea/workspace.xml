@@ -4,6 +4,8 @@
     <list default="true" id="fcd325e0-a40e-41b0-b1c5-0469445a53e8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FundooApp/notes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/FundooApp/notes/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/SearchSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/FundooUI/fundooui/src/Components/SearchSection.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
